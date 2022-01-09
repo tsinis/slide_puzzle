@@ -1,0 +1,36 @@
+name: deploy
+
+on:
+  push:
+    paths:
+      - "lib/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    name: deploy
+    steps:
+      - uses: actions/checkout@v2
+
+      # - uses: subosito/flutter-action@v2
+
+      # - name: Install Dependencies
+      #   run: flutter packages get
+
+      # - name: Build for Web
+      #   run: flutter build web --target lib/main_development.dart --web-renderer html
+
+      # - name: Deploy
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
+      #     firebaseServiceAccount: "${{ secrets.FIREBASE_HOSTING_DEV }}"
+      #     projectId: map-slide-puzzle-flutter-dev
+      #     target: map-slide-puzzle
+      #     expires: 30d
+      #     channelId: live

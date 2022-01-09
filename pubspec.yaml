@@ -1,0 +1,52 @@
+name: map_slide_puzzle
+description: A Very Good Modification of a very_good_slide_puzzle (from Very Good CLI).
+version: 1.0.0+1
+repository: https://github.com/tsinis/slide_puzzle
+issue_tracker: https://github.com/tsinis/slide_puzzle/issues
+maintainer: Roman Cinis
+publish_to: none
+
+environment:
+  sdk: ">=2.15.0"
+  flutter: ">=2.8.1"
+
+dependencies:
+  bloc: ^8.0.2
+  equatable: ^2.0.3
+  fake_async: ^1.2.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.0.1
+  flutter_localizations:
+    sdk: flutter
+  flutter_svg: ^1.0.0
+  gap: ^2.0.0
+  google_fonts: ^2.2.0
+  intl: ^0.17.0
+
+dev_dependencies:
+  bloc_test: ^9.0.2
+  dart_code_metrics: ^4.8.1
+  flutter_lints: ^1.0.4
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.2.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/GoogleSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/GoogleSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/GoogleSans-Italic.ttf
+          weight: 400
+          style: italic
