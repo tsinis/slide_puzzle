@@ -1,4 +1,4 @@
-name: map_slide_puzzle
+name: Tests
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - "lib/**"
       - "test/**"
       - "pubspec.yaml"
-      - ".github/workflows/map_slide_puzzle.yaml"
+      - ".github/workflows/tests.yaml"
 
 jobs:
   build:
@@ -15,10 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: subosito/flutter-action@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
 
-      - name: Install Dependencies
-        run: flutter packages get
+      - name: Install app dependencies
+        run: flutter pub get
+
+      - name: Generate localization files
+        run: flutter gen-l10n
 
       - name: Format
         run: flutter format --set-exit-if-changed lib test
@@ -31,3 +35,9 @@ jobs:
 
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+
+      #   TODO: Add later:
+      # - name: Upload Code Coverage
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     file: ./coverage/lcov.info

@@ -19,14 +19,14 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.0.0
+  flutter_svg: ^1.0.1
   gap: ^2.0.0
   google_fonts: ^2.2.0
   intl: ^0.17.0
 
 dev_dependencies:
   bloc_test: ^9.0.2
-  dart_code_metrics: ^4.8.1
+  dart_code_metrics: ^4.9.0
   flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter

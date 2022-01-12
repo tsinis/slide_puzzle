@@ -5,9 +5,15 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "ignore": [
-      ".firebase",
       "firebase.json",
-      "__/**"
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }

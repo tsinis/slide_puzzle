@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy
 
 on:
   push:
@@ -12,25 +12,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    name: deploy
+    name: Deploy
     steps:
       - uses: actions/checkout@v2
 
-      # - uses: subosito/flutter-action@v2
+      - name: Install Flutter
+      - uses: subosito/flutter-action@v2
 
-      # - name: Install Dependencies
-      #   run: flutter packages get
+      - name: Install Dependencies
+        run: flutter pub get
 
-      # - name: Build for Web
-      #   run: flutter build web --target lib/main_development.dart --web-renderer html
+      - name: Generate L10N
+        run: flutter gen-l10n
 
-      # - name: Deploy
-      #   uses: FirebaseExtended/action-hosting-deploy@v0
-      #   with:
-      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
-      #     firebaseServiceAccount: "${{ secrets.FIREBASE_HOSTING_DEV }}"
-      #     projectId: map-slide-puzzle-flutter-dev
-      #     target: map-slide-puzzle
-      #     expires: 30d
-      #     channelId: live
+      - name: Build for Web
+        run: flutter build web --release
+
+      - name: Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAP_SLIDE_PUZZLE }}"
+          projectId: map-slide-puzzle
+          channelId: live
+          expires: 30d
