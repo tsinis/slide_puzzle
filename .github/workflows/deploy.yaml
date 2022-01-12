@@ -15,14 +15,19 @@ jobs:
     steps:
     - name: Checks-out repository
       uses: actions/checkout@v2
+
     - name: Install Flutter
-    - uses: subosito/flutter-action@v2
+      uses: subosito/flutter-action@v2
+
     - name: Install Dependencies
       run: flutter pub get
+
     - name: Generate L10N
       run: flutter gen-l10n
+
     - name: Build for Web
       run: flutter build web --release
+
     - name: Deploy
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
