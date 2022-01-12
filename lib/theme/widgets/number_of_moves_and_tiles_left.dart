@@ -45,10 +45,8 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
             ? PuzzleTextStyle.bodySmall
             : PuzzleTextStyle.body;
 
-        return RichText(
-          key: const Key('numberOfMovesAndTilesLeft'),
-          textAlign: TextAlign.center,
-          text: TextSpan(
+        return Text.rich(
+          TextSpan(
             text: numberOfMoves.toString(),
             style: PuzzleTextStyle.headline4.copyWith(
               color: textColor,
@@ -74,6 +72,8 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
               ),
             ],
           ),
+          key: const Key('numberOfMovesAndTilesLeft'),
+          textAlign: TextAlign.center,
         );
       },
     );
