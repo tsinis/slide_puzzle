@@ -39,7 +39,6 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
     return ResponsiveLayoutBuilder(
       small: (context, child) => Center(child: child),
       medium: (context, child) => Center(child: child),
-      large: (context, child) => child!,
       child: (currentSize) {
         final bodyTextStyle = currentSize == ResponsiveLayoutSize.small
             ? PuzzleTextStyle.bodySmall

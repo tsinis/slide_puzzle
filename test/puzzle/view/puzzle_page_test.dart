@@ -84,21 +84,6 @@ void main() {
 
     testWidgets(
       'renders puzzle correctly '
-      'on a large display',
-      (tester) async {
-        tester.setLargeDisplaySize();
-
-        await tester.pumpApp(
-          PuzzleView(),
-          themeBloc: themeBloc,
-        );
-
-        expect(find.byKey(Key('puzzle_view_puzzle')), findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'renders puzzle correctly '
       'on a medium display',
       (tester) async {
         tester.setMediumDisplaySize();

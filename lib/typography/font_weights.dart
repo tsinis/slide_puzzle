@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 /// Defines font weights for the puzzle UI.
+// ignore: prefer-match-file-name
 abstract class PuzzleFontWeight {
   /// FontWeight value of `w900`
   static const FontWeight black = FontWeight.w900;

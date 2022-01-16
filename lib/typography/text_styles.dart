@@ -6,6 +6,7 @@ import 'typography.dart';
 
 // ignore: avoid_classes_with_only_static_members
 /// Defines text styles for the puzzle UI.
+// ignore: prefer-match-file-name
 class PuzzleTextStyle {
   static const _baseTextStyle = TextStyle(
     fontFamily: 'GoogleSans',

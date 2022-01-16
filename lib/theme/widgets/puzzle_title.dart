@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../colors/colors.dart';
 import '../../layout/layout.dart';
 import '../../typography/typography.dart';
@@ -40,15 +41,6 @@ class PuzzleTitle extends StatelessWidget {
           child: Text(
             title,
             style: PuzzleTextStyle.headline3.copyWith(
-              color: color,
-            ),
-          ),
-        ),
-        large: (context, child) => SizedBox(
-          width: 300,
-          child: Text(
-            title,
-            style: PuzzleTextStyle.headline2.copyWith(
               color: color,
             ),
           ),

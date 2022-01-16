@@ -8,6 +8,7 @@ import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/timer/timer.dart';
 import 'package:mocktail/mocktail.dart';
 
+// ignore: prefer-match-file-name
 class MockTicker extends Mock implements Ticker {}
 
 void main() {

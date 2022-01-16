@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 /// Defines the color palette for the puzzle UI.
+// ignore: prefer-match-file-name
 abstract class PuzzleColors {
   /// Primary 1
   static const Color primary1 = Color(0xFF041E3C);

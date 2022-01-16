@@ -22,23 +22,6 @@ void main() {
       when(() => themeBloc.state).thenReturn(themeState);
     });
 
-    testWidgets('renders on a large display', (tester) async {
-      tester.setLargeDisplaySize();
-
-      await tester.pumpApp(
-        NumberOfMovesAndTilesLeft(
-          numberOfMoves: 5,
-          numberOfTilesLeft: 15,
-        ),
-        themeBloc: themeBloc,
-      );
-
-      expect(
-        find.byKey(Key('numberOfMovesAndTilesLeft')),
-        findsOneWidget,
-      );
-    });
-
     testWidgets('renders on a medium display', (tester) async {
       tester.setMediumDisplaySize();
 

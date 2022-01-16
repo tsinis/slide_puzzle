@@ -8,6 +8,7 @@ import 'package:map_slide_puzzle/theme/theme.dart';
 import 'package:map_slide_puzzle/timer/timer.dart';
 import 'package:mocktail/mocktail.dart';
 
+// ignore: prefer-match-file-name
 class MockPuzzleTheme extends Mock implements PuzzleTheme {}
 
 class MockThemeBloc extends MockBloc<ThemeEvent, ThemeState>

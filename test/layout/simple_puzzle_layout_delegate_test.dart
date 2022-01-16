@@ -49,28 +49,6 @@ void main() {
     group('startSectionBuilder', () {
       testWidgets(
         'renders SimpleStartSection '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            SingleChildScrollView(
-              child: layoutDelegate.startSectionBuilder(state),
-            ),
-            themeBloc: themeBloc,
-          );
-
-          expect(
-            find.byWidgetPredicate(
-              (widget) => widget is SimpleStartSection && widget.state == state,
-            ),
-            findsOneWidget,
-          );
-        },
-      );
-
-      testWidgets(
-        'renders SimpleStartSection '
         'on a medium display',
         (tester) async {
           tester.setMediumDisplaySize();
@@ -116,24 +94,6 @@ void main() {
 
     group('endSectionBuilder', () {
       testWidgets(
-        'renders an empty widget '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            SingleChildScrollView(
-              child: layoutDelegate.endSectionBuilder(state),
-            ),
-            themeBloc: themeBloc,
-          );
-
-          expect(find.byType(SizedBox), findsOneWidget);
-          expect(find.byType(SimplePuzzleShuffleButton), findsNothing);
-        },
-      );
-
-      testWidgets(
         'renders SimplePuzzleShuffleButton '
         'on a medium display',
         (tester) async {
@@ -169,28 +129,6 @@ void main() {
     });
 
     group('backgroundBuilder', () {
-      testWidgets(
-        'renders a large dash Image '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            Stack(
-              children: [
-                layoutDelegate.backgroundBuilder(state),
-              ],
-            ),
-            themeBloc: themeBloc,
-          );
-
-          expect(
-            find.byKey(Key('simple_puzzle_dash_large')),
-            findsOneWidget,
-          );
-        },
-      );
-
       testWidgets(
         'renders a medium dash Image '
         'on a medium display',
@@ -237,28 +175,6 @@ void main() {
     });
 
     group('boardBuilder', () {
-      testWidgets(
-        'renders a large puzzle board '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            SingleChildScrollView(
-              child: layoutDelegate.boardBuilder(4, [
-                const SizedBox(),
-              ]),
-            ),
-            themeBloc: themeBloc,
-          );
-
-          expect(
-            find.byKey(Key('simple_puzzle_board_large')),
-            findsOneWidget,
-          );
-        },
-      );
-
       testWidgets(
         'renders a medium puzzle board '
         'on a medium display',
@@ -314,24 +230,6 @@ void main() {
       });
 
       testWidgets(
-        'renders a large puzzle tile '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            layoutDelegate.tileBuilder(tile, state),
-            themeBloc: themeBloc,
-          );
-
-          expect(
-            find.byKey(Key('simple_puzzle_tile_${tileValue}_large')),
-            findsOneWidget,
-          );
-        },
-      );
-
-      testWidgets(
         'renders a medium puzzle tile '
         'on a medium display',
         (tester) async {
@@ -383,17 +281,6 @@ void main() {
     });
 
     group('SimpleStartSection', () {
-      testWidgets('renders PuzzleName', (tester) async {
-        await tester.pumpApp(
-          SingleChildScrollView(
-            child: SimpleStartSection(state: state),
-          ),
-          themeBloc: themeBloc,
-        );
-
-        expect(find.byType(PuzzleName), findsOneWidget);
-      });
-
       testWidgets('renders SimplePuzzleTitle', (tester) async {
         when(() => state.puzzleStatus).thenReturn(PuzzleStatus.complete);
 
@@ -432,26 +319,6 @@ void main() {
           findsOneWidget,
         );
       });
-
-      testWidgets(
-        'renders SimplePuzzleShuffleButton '
-        'on a large display',
-        (tester) async {
-          tester.setLargeDisplaySize();
-
-          await tester.pumpApp(
-            SingleChildScrollView(
-              child: SimpleStartSection(state: state),
-            ),
-            themeBloc: themeBloc,
-          );
-
-          expect(
-            find.byType(SimplePuzzleShuffleButton),
-            findsOneWidget,
-          );
-        },
-      );
     });
 
     group('SimplePuzzleTile', () {

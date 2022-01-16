@@ -13,6 +13,8 @@ import 'package:flutter/widgets.dart';
 
 /// Custom instance of [BlocObserver] which logs
 /// any state changes and errors.
+///
+// ignore: prefer-match-file-name
 class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {

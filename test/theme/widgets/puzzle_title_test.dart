@@ -7,19 +7,6 @@ import '../../helpers/helpers.dart';
 
 void main() {
   group('PuzzleTitle', () {
-    testWidgets('renders on a large display', (tester) async {
-      tester.setLargeDisplaySize();
-
-      await tester.pumpApp(
-        PuzzleTitle(title: 'Title'),
-      );
-
-      expect(
-        find.text('Title'),
-        findsOneWidget,
-      );
-    });
-
     testWidgets('renders on a medium display', (tester) async {
       tester.setMediumDisplaySize();
 

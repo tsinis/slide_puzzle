@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/layout/layout.dart';
 
+// ignore: prefer-match-file-name
 extension PuzzleWidgetTester on WidgetTester {
   void setDisplaySize(Size size) {
     binding.window.physicalSizeTestValue = size;
@@ -10,10 +11,6 @@ extension PuzzleWidgetTester on WidgetTester {
       binding.window.clearPhysicalSizeTestValue();
       binding.window.clearDevicePixelRatioTestValue();
     });
-  }
-
-  void setLargeDisplaySize() {
-    setDisplaySize(const Size(PuzzleBreakpoints.large, 1000));
   }
 
   void setMediumDisplaySize() {
