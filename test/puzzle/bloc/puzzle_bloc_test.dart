@@ -99,7 +99,7 @@ void main() {
         'emits solvable 3x3 puzzle, [incomplete], 0 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to true',
         build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: true)),
+        act: (bloc) => bloc.add(PuzzleInitialized()),
         expect: () => [PuzzleState(puzzle: puzzleSize3)],
         verify: (bloc) => expect(bloc.state.puzzle.isSolvable(), isTrue),
       );
@@ -108,7 +108,7 @@ void main() {
         'emits unshuffled 3x3 puzzle, 8 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to false',
         build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: false)),
+        act: (bloc) => bloc.add(PuzzleInitialized()),
         expect: () => [
           PuzzleState(
             puzzle: puzzleSize3Unshuffled,
@@ -293,7 +293,7 @@ void main() {
       );
 
       blocTest<PuzzleBloc, PuzzleState>(
-        'emits [cannotBeMoved] when puzzle is complete',
+        'emits [cannotBeMoved] when PuzzleStatus is complete',
         build: () => PuzzleBloc(size),
         seed: () => PuzzleState(
           puzzle: puzzle,

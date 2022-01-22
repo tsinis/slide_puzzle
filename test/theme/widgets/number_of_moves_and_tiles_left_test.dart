@@ -3,25 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/theme/theme.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 
 void main() {
   group('NumberOfMovesAndTilesLeft', () {
-    late ThemeBloc themeBloc;
-    late PuzzleTheme theme;
-
-    setUp(() {
-      themeBloc = MockThemeBloc();
-      theme = MockPuzzleTheme();
-      final themeState = MockThemeState();
-
-      when(() => theme.defaultColor).thenReturn(Colors.black);
-      when(() => themeState.theme).thenReturn(theme);
-      when(() => themeBloc.state).thenReturn(themeState);
-    });
-
     testWidgets('renders on a medium display', (tester) async {
       tester.setMediumDisplaySize();
 
@@ -30,11 +16,10 @@ void main() {
           numberOfMoves: 5,
           numberOfTilesLeft: 15,
         ),
-        themeBloc: themeBloc,
       );
 
       expect(
-        find.byKey(Key('numberOfMovesAndTilesLeft')),
+        find.byKey(Key('number_of_moves_and_tiles_left')),
         findsOneWidget,
       );
     });
@@ -47,11 +32,10 @@ void main() {
           numberOfMoves: 5,
           numberOfTilesLeft: 15,
         ),
-        themeBloc: themeBloc,
       );
 
       expect(
-        find.byKey(Key('numberOfMovesAndTilesLeft')),
+        find.byKey(Key('number_of_moves_and_tiles_left')),
         findsOneWidget,
       );
     });
@@ -62,11 +46,21 @@ void main() {
           numberOfMoves: 5,
           numberOfTilesLeft: 15,
         ),
-        themeBloc: themeBloc,
       );
 
       expect(
-        find.text('5 Moves | 15 Tiles', findRichText: true),
+        find.descendant(
+          of: find.byKey(Key('number_of_moves_and_tiles_left_moves')),
+          matching: find.text('5'),
+        ),
+        findsOneWidget,
+      );
+
+      expect(
+        find.descendant(
+          of: find.byKey(Key('number_of_moves_and_tiles_left_tiles_left')),
+          matching: find.text('15'),
+        ),
         findsOneWidget,
       );
     });
@@ -80,39 +74,38 @@ void main() {
           numberOfTilesLeft: 15,
           color: color,
         ),
-        themeBloc: themeBloc,
       );
 
-      final rootText = tester.widget<RichText>(find.byType(RichText));
-
-      expect(
-        rootText.text.style?.color,
-        equals(color),
+      final textStyles = tester.widgetList<AnimatedDefaultTextStyle>(
+        find.byType(AnimatedDefaultTextStyle),
       );
+
+      for (final textStyle in textStyles) {
+        expect(textStyle.style.color, equals(color));
+      }
     });
 
     testWidgets(
-      'renders text using defaultColor from theme '
+      'renders text '
+      'using PuzzleTheme.defaultColor as text color '
       'if not provided',
       (tester) async {
         const themeColor = Colors.green;
-
-        when(() => theme.defaultColor).thenReturn(themeColor);
 
         await tester.pumpApp(
           NumberOfMovesAndTilesLeft(
             numberOfMoves: 5,
             numberOfTilesLeft: 15,
           ),
-          themeBloc: themeBloc,
         );
 
-        final rootText = tester.widget<RichText>(find.byType(RichText));
-
-        expect(
-          rootText.text.style?.color,
-          equals(themeColor),
+        final textStyles = tester.widgetList<AnimatedDefaultTextStyle>(
+          find.byType(AnimatedDefaultTextStyle),
         );
+
+        for (final textStyle in textStyles) {
+          expect(textStyle.style.color, equals(themeColor));
+        }
       },
     );
   });

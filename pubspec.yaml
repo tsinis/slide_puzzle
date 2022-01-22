@@ -18,14 +18,17 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.0.1
+  flutter_svg: ^1.0.3
   gap: ^2.0.0
   google_fonts: ^2.2.0
   intl: ^0.17.0
+  just_audio: ^0.9.18
+  universal_platform: ^1.0.0+1
+  url_launcher: ^6.0.18
 
 dev_dependencies:
   bloc_test: ^9.0.2
-  dart_code_metrics: ^4.9.1
+  dart_code_metrics: ^4.10.0-dev.2
   fake_async: ^1.2.0
   flutter_lints: ^1.0.4
   flutter_test:
@@ -36,7 +39,11 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
+    - assets/audio/
     - assets/images/
+    - assets/images/audio_control/
+    - assets/images/dashatar/success/
+    - assets/images/dashatar/green/
   fonts:
     - family: GoogleSans
       fonts:

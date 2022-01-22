@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../dashatar/themes/green_dashatar_theme.dart';
 import '../../l10n/l10n.dart';
 import '../../layout/layout.dart';
 import '../../typography/typography.dart';
@@ -11,15 +11,15 @@ import '../theme.dart';
 /// and how many puzzle tiles are not in their correct position.
 /// {@endtemplate}
 class NumberOfMovesAndTilesLeft extends StatelessWidget {
-  /// The color of texts that display [numberOfMoves] and [numberOfTilesLeft].
-  /// Defaults to [PuzzleTheme.defaultColor].
-  final Color? color;
-
   /// The number of moves to be displayed.
   final int numberOfMoves;
 
   /// The number of tiles left to be displayed.
   final int numberOfTilesLeft;
+
+  /// The color of texts that display [numberOfMoves] and [numberOfTilesLeft].
+  /// Defaults to [PuzzleTheme.defaultColor].
+  final Color? color;
 
   /// {@macro number_of_moves_and_tiles_left}
   const NumberOfMovesAndTilesLeft({
@@ -31,8 +31,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: avoid_types_on_closure_parameters
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    const theme = GreenDashatarTheme();
     final l10n = context.l10n;
     final textColor = color ?? theme.defaultColor;
 
@@ -44,35 +43,51 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
             ? PuzzleTextStyle.bodySmall
             : PuzzleTextStyle.body;
 
-        return Text.rich(
-          TextSpan(
-            text: numberOfMoves.toString(),
-            style: PuzzleTextStyle.headline4.copyWith(
-              color: textColor,
-            ),
-            children: [
-              TextSpan(
-                text: ' ${l10n.puzzleNumberOfMoves} | ',
-                style: bodyTextStyle.copyWith(
-                  color: textColor,
-                ),
-              ),
-              TextSpan(
-                text: numberOfTilesLeft.toString(),
-                style: PuzzleTextStyle.headline4.copyWith(
-                  color: textColor,
-                ),
-              ),
-              TextSpan(
-                text: ' ${l10n.puzzleNumberOfTilesLeft}',
-                style: bodyTextStyle.copyWith(
-                  color: textColor,
-                ),
-              ),
-            ],
+        return Semantics(
+          label: l10n.puzzleNumberOfMovesAndTilesLeftLabelText(
+            numberOfMoves.toString(),
+            numberOfTilesLeft.toString(),
           ),
-          key: const Key('numberOfMovesAndTilesLeft'),
-          textAlign: TextAlign.center,
+          child: ExcludeSemantics(
+            child: Row(
+              key: const Key('number_of_moves_and_tiles_left'),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                AnimatedDefaultTextStyle(
+                  key: const Key('number_of_moves_and_tiles_left_moves'),
+                  style: PuzzleTextStyle.headline4.copyWith(
+                    color: textColor,
+                  ),
+                  duration: PuzzleThemeAnimationDuration.textStyle,
+                  child: Text(numberOfMoves.toString()),
+                ),
+                AnimatedDefaultTextStyle(
+                  style: bodyTextStyle.copyWith(
+                    color: textColor,
+                  ),
+                  duration: PuzzleThemeAnimationDuration.textStyle,
+                  child: Text(' ${l10n.puzzleNumberOfMoves} | '),
+                ),
+                AnimatedDefaultTextStyle(
+                  key: const Key('number_of_moves_and_tiles_left_tiles_left'),
+                  style: PuzzleTextStyle.headline4.copyWith(
+                    color: textColor,
+                  ),
+                  duration: PuzzleThemeAnimationDuration.textStyle,
+                  child: Text(numberOfTilesLeft.toString()),
+                ),
+                AnimatedDefaultTextStyle(
+                  style: bodyTextStyle.copyWith(
+                    color: textColor,
+                  ),
+                  duration: PuzzleThemeAnimationDuration.textStyle,
+                  child: Text(' ${l10n.puzzleNumberOfTilesLeft}'),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

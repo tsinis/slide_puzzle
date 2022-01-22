@@ -17,7 +17,6 @@ class TolerantComparator extends LocalFileComparator {
   /// If compared files produce less than [differenceTolerance]% difference,
   /// then the test is accepted. Otherwise, the test fails.
   static const differenceTolerance = 0.06;
-
   TolerantComparator(Uri testFile) : super(testFile);
 
   @override

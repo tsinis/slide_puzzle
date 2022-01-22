@@ -2,7 +2,6 @@
 
 ![Photo Booth Header][logo]
 
-![coverage][coverage_badge]
 [![License: MIT][license_badge]][license_link]
 
 A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).

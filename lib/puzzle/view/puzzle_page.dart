@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../audio_control/audio_control.dart';
+import '../../dashatar/dashatar.dart';
 import '../../layout/layout.dart';
 import '../../models/models.dart';
 import '../../theme/theme.dart';
@@ -13,19 +15,27 @@ import '../puzzle.dart';
 /// The root page of the puzzle UI.
 ///
 /// Builds the puzzle based on the current [PuzzleTheme]
-/// from [ThemeBloc].
+
 /// {@endtemplate}
 class PuzzlePage extends StatelessWidget {
   /// {@macro puzzle_page}
   const PuzzlePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => ThemeBloc(
-          themes: const [
-            SimpleTheme(),
-          ],
-        ),
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => DashatarThemeBloc(
+              themes: const [GreenDashatarTheme()],
+            )..add(const DashatarThemeChanged(themeIndex: 0)),
+          ),
+          BlocProvider(
+            create: (_) =>
+                DashatarPuzzleBloc(secondsToBegin: 3, ticker: const Ticker()),
+          ),
+          BlocProvider(create: (_) => TimerBloc(ticker: const Ticker())),
+          BlocProvider(create: (_) => AudioControlBloc()),
+        ],
         child: const PuzzleView(),
       );
 }
@@ -40,22 +50,22 @@ class PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
-    /// Shuffle only if the current theme is Simple.
-    final shufflePuzzle = theme is SimpleTheme;
+    const theme = GreenDashatarTheme();
 
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: BlocProvider(
-        create: (context) => TimerBloc(
-          ticker: const Ticker(),
-        ),
-        child: BlocProvider(
-          create: (context) => PuzzleBloc(4)
-            ..add(PuzzleInitialized(shufflePuzzle: shufflePuzzle)),
-          child: const _Puzzle(
-            key: Key('puzzle_view_puzzle'),
+      body: AnimatedContainer(
+        duration: PuzzleThemeAnimationDuration.backgroundColorChange,
+        decoration: BoxDecoration(color: theme.backgroundColor),
+        child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
+          listener: (context, state) {},
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => TimerBloc(ticker: const Ticker())),
+              BlocProvider(
+                create: (_) => PuzzleBloc(4)..add(const PuzzleInitialized()),
+              ),
+            ],
+            child: const _Puzzle(key: Key('puzzle_view_puzzle')),
           ),
         ),
       ),
@@ -69,7 +79,7 @@ class _Puzzle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    const theme = GreenDashatarTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return GridPaper(
@@ -78,19 +88,14 @@ class _Puzzle extends StatelessWidget {
       subdivisions: 3,
       child: LayoutBuilder(
         builder: (context, constraints) => Stack(
-          fit: StackFit.expand,
           children: [
-            theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: const Center(
-                  child: _PuzzleSections(
-                    key: Key('puzzle_sections'),
-                  ),
-                ),
+                child: const PuzzleSections(),
               ),
             ),
+            theme.layoutDelegate.backgroundBuilder(state),
           ],
         ),
       ),
@@ -98,32 +103,48 @@ class _Puzzle extends StatelessWidget {
   }
 }
 
+/// {@template puzzle_logo}
+/// Displays the logo of the puzzle.
+/// {@endtemplate}
+@visibleForTesting
 // ignore: prefer-single-widget-per-file
-class _PuzzleSections extends StatelessWidget {
-  const _PuzzleSections({Key? key}) : super(key: key);
+class PuzzleLogo extends StatelessWidget {
+  /// {@macro puzzle_logo}
+  const PuzzleLogo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    const theme = GreenDashatarTheme();
+
+    return AppFlutterLogo(
+      key: puzzleLogoKey,
+      isColored: theme.isLogoColored,
+    );
+  }
+}
+
+/// {@template puzzle_sections}
+/// Displays start and end sections of the puzzle.
+/// {@endtemplate}
+// ignore: prefer-single-widget-per-file
+class PuzzleSections extends StatelessWidget {
+  /// {@macro puzzle_sections}
+  const PuzzleSections({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const theme = GreenDashatarTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return Padding(
-      padding: const EdgeInsets.all(66),
-      child: ResponsiveLayoutBuilder(
-        small: (context, child) => Column(
-          children: [
-            theme.layoutDelegate.startSectionBuilder(state),
-            const PuzzleBoard(),
-            theme.layoutDelegate.endSectionBuilder(state),
-          ],
-        ),
-        medium: (context, child) => Column(
-          children: [
-            theme.layoutDelegate.startSectionBuilder(state),
-            const PuzzleBoard(),
-            theme.layoutDelegate.endSectionBuilder(state),
-          ],
-        ),
+    return Center(
+      child: Column(
+        children: [
+          theme.layoutDelegate.startSectionBuilder(state),
+          const ResponsiveGap(small: 8, medium: 16),
+          const PuzzleBoard(),
+          const ResponsiveGap(small: 16, medium: 24),
+          theme.layoutDelegate.endSectionBuilder(state),
+        ],
       ),
     );
   }
@@ -132,6 +153,7 @@ class _PuzzleSections extends StatelessWidget {
 /// {@template puzzle_board}
 /// Displays the board of the puzzle.
 /// {@endtemplate}
+@visibleForTesting
 // ignore: prefer-single-widget-per-file
 class PuzzleBoard extends StatelessWidget {
   /// {@macro puzzle_board}
@@ -139,7 +161,7 @@ class PuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    const theme = GreenDashatarTheme();
     final puzzle = context.select((PuzzleBloc bloc) => bloc.state.puzzle);
 
     final size = puzzle.getDimension();
@@ -147,33 +169,38 @@ class PuzzleBoard extends StatelessWidget {
       return const CircularProgressIndicator();
     }
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Colors.white60,
-        border: Border.all(color: Colors.blue, width: 4),
-        borderRadius: const BorderRadius.all(Radius.circular(24)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(36),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-          child: BlocListener<PuzzleBloc, PuzzleState>(
-            listener: (context, state) {
-              if (theme.hasTimer &&
-                  state.puzzleStatus == PuzzleStatus.complete) {
-                context.read<TimerBloc>().add(const TimerStopped());
-              }
-            },
-            child: theme.layoutDelegate.boardBuilder(
-              size,
-              puzzle.tiles
-                  .map(
-                    (tile) => _PuzzleTile(
-                      key: Key('puzzle_tile_${tile.value.toString()}'),
-                      tile: tile,
-                    ),
-                  )
-                  .toList(),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.white60,
+          border: Border.all(color: Colors.blue, width: 4),
+          borderRadius: const BorderRadius.all(Radius.circular(24)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(36),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
+            child: PuzzleKeyboardHandler(
+              child: BlocListener<PuzzleBloc, PuzzleState>(
+                listener: (context, state) {
+                  if (theme.hasTimer &&
+                      state.puzzleStatus == PuzzleStatus.complete) {
+                    context.read<TimerBloc>().add(const TimerStopped());
+                  }
+                },
+                child: theme.layoutDelegate.boardBuilder(
+                  size,
+                  puzzle.tiles
+                      .map(
+                        (tile) => _PuzzleTile(
+                          key: Key('puzzle_tile_${tile.value.toString()}'),
+                          tile: tile,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
             ),
           ),
         ),
@@ -191,7 +218,7 @@ class _PuzzleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    const theme = GreenDashatarTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return tile.isWhitespace
@@ -199,3 +226,31 @@ class _PuzzleTile extends StatelessWidget {
         : theme.layoutDelegate.tileBuilder(tile, state);
   }
 }
+
+/// The global key of [PuzzleLogo].
+///
+/// Used to animate the transition of [PuzzleLogo] when changing a theme.
+final puzzleLogoKey = GlobalKey(debugLabel: 'puzzle_logo');
+
+/// The global key of [PuzzleName].
+///
+/// Used to animate the transition of [PuzzleName] when changing a theme.
+final puzzleNameKey = GlobalKey(debugLabel: 'puzzle_name');
+
+/// The global key of [PuzzleTitle].
+///
+/// Used to animate the transition of [PuzzleTitle] when changing a theme.
+final puzzleTitleKey = GlobalKey(debugLabel: 'puzzle_title');
+
+/// The global key of [NumberOfMovesAndTilesLeft].
+///
+/// Used to animate the transition of [NumberOfMovesAndTilesLeft]
+/// when changing a theme.
+final numberOfMovesAndTilesLeftKey =
+    GlobalKey(debugLabel: 'number_of_moves_and_tiles_left');
+
+/// The global key of [AudioControl].
+///
+/// Used to animate the transition of [AudioControl]
+/// when changing a theme.
+final audioControlKey = GlobalKey(debugLabel: 'audio_control');

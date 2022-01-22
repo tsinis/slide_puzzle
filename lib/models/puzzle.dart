@@ -1,5 +1,8 @@
 import 'dart:math';
+import 'dart:ui';
 
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 import 'models.dart';
@@ -42,96 +45,6 @@ class Puzzle extends Equatable {
   /// {@macro puzzle}
   const Puzzle({required this.tiles});
 
-  /// Gives the number of inversions in a puzzle given its tile arrangement.
-  ///
-  /// An inversion is when a tile of a lower value is in a greater position than
-  /// a tile of a higher value.
-  int countInversions() {
-    var count = 0;
-    for (var a = 0; a < tiles.length; a++) {
-      final tileA = tiles[a];
-      if (tileA.isWhitespace) {
-        continue;
-      }
-
-      for (var b = a + 1; b < tiles.length; b++) {
-        final tileB = tiles[b];
-        if (_isInversion(tileA, tileB)) {
-          count++;
-        }
-      }
-    }
-
-    return count;
-  }
-
-  /// Get the dimension of a puzzle given its tile arrangement.
-  ///
-  /// Ex: A 4x4 puzzle has a dimension of 4.
-  int getDimension() => sqrt(tiles.length).toInt();
-
-  /// Gets the number of tiles that are currently in their correct position.
-  int getNumberOfCorrectTiles() {
-    final whitespaceTile = getWhitespaceTile();
-    var numberOfCorrectTiles = 0;
-    for (final tile in tiles) {
-      if (tile != whitespaceTile) {
-        if (tile.currentPosition == tile.correctPosition) {
-          numberOfCorrectTiles++;
-        }
-      }
-    }
-
-    return numberOfCorrectTiles;
-  }
-
-  /// Get the single whitespace tile object in the puzzle.
-  Tile getWhitespaceTile() => tiles.singleWhere((tile) => tile.isWhitespace);
-
-  /// Determines if the puzzle is completed.
-  bool isComplete() => (tiles.length - 1) - getNumberOfCorrectTiles() == 0;
-
-  /// Determines if the puzzle is solvable.
-  bool isSolvable() {
-    final size = getDimension();
-    final height = tiles.length ~/ size;
-    assert(
-      size * height == tiles.length,
-      'tiles must be equal to size * height',
-    );
-    final inversions = countInversions();
-
-    if (size.isOdd) {
-      return inversions.isEven;
-    }
-
-    final whitespace = tiles.singleWhere((tile) => tile.isWhitespace);
-    final whitespaceRow = whitespace.currentPosition.y;
-
-    if (((height - whitespaceRow) + 1).isOdd) {
-      return inversions.isEven;
-    } else {
-      return inversions.isOdd;
-    }
-  }
-
-  /// Determines if the tapped tile can move in the direction of the whitespace
-  /// tile.
-  bool isTileMovable(Tile tile) {
-    final whitespaceTile = getWhitespaceTile();
-    if (tile == whitespaceTile) {
-      return false;
-    }
-
-    // A tile must be in the same row or column as the whitespace to move.
-    if (whitespaceTile.currentPosition.x != tile.currentPosition.x &&
-        whitespaceTile.currentPosition.y != tile.currentPosition.y) {
-      return false;
-    }
-
-    return true;
-  }
-
   /// Shifts one or many tiles in a row/column with the whitespace and returns
   /// the modified puzzle.
   ///
@@ -169,6 +82,110 @@ class Puzzle extends Equatable {
       );
 
     return Puzzle(tiles: sortedTiles);
+  }
+
+  /// Get the dimension of a puzzle given its tile arrangement.
+  ///
+  /// Ex: A 4x4 puzzle has a dimension of 4.
+  int getDimension() => sqrt(tiles.length).toInt();
+
+  /// Gets the single whitespace tile object in the puzzle.
+  Tile getWhitespaceTile() => tiles.singleWhere((tile) => tile.isWhitespace);
+
+  /// Gets the tile relative to the whitespace tile in the puzzle
+  /// defined by [relativeOffset].
+  Tile? getTileRelativeToWhitespaceTile(Offset relativeOffset) {
+    final whitespaceTile = getWhitespaceTile();
+
+    return tiles.singleWhereOrNull(
+      (tile) =>
+          tile.currentPosition.x ==
+              whitespaceTile.currentPosition.x + relativeOffset.dx &&
+          tile.currentPosition.y ==
+              whitespaceTile.currentPosition.y + relativeOffset.dy,
+    );
+  }
+
+  /// Gets the number of tiles that are currently in their correct position.
+  int getNumberOfCorrectTiles() {
+    final whitespaceTile = getWhitespaceTile();
+    var numberOfCorrectTiles = 0;
+    for (final tile in tiles) {
+      if (tile != whitespaceTile) {
+        if (tile.currentPosition == tile.correctPosition) {
+          numberOfCorrectTiles++;
+        }
+      }
+    }
+
+    return numberOfCorrectTiles;
+  }
+
+  /// Determines if the puzzle is completed.
+  bool isComplete() => (tiles.length - 1) - getNumberOfCorrectTiles() == 0;
+
+  /// Determines if the tapped tile can move in the direction of the whitespace
+  /// tile.
+  bool isTileMovable(Tile tile) {
+    final whitespaceTile = getWhitespaceTile();
+    if (tile == whitespaceTile) {
+      return false;
+    }
+
+    // A tile must be in the same row or column as the whitespace to move.
+    if (whitespaceTile.currentPosition.x != tile.currentPosition.x &&
+        whitespaceTile.currentPosition.y != tile.currentPosition.y) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Determines if the puzzle is solvable.
+  bool isSolvable() {
+    final size = getDimension();
+    final height = tiles.length ~/ size;
+    assert(
+      size * height == tiles.length,
+      'tiles must be equal to size * height',
+    );
+    final inversions = countInversions();
+
+    if (size.isOdd) {
+      return inversions.isEven;
+    }
+
+    final whitespace = tiles.singleWhere((tile) => tile.isWhitespace);
+    final whitespaceRow = whitespace.currentPosition.y;
+
+    if (((height - whitespaceRow) + 1).isOdd) {
+      return inversions.isEven;
+    } else {
+      return inversions.isOdd;
+    }
+  }
+
+  /// Gives the number of inversions in a puzzle given its tile arrangement.
+  ///
+  /// An inversion is when a tile of a lower value is in a greater position than
+  /// a tile of a higher value.
+  int countInversions() {
+    var count = 0;
+    for (var a = 0; a < tiles.length; a++) {
+      final tileA = tiles[a];
+      if (tileA.isWhitespace) {
+        continue;
+      }
+
+      for (var b = a + 1; b < tiles.length; b++) {
+        final tileB = tiles[b];
+        if (_isInversion(tileA, tileB)) {
+          count++;
+        }
+      }
+    }
+
+    return count;
   }
 
   /// Determines if the two tiles are inverted.

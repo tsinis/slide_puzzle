@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:map_slide_puzzle/audio_control/audio_control.dart';
+import 'package:map_slide_puzzle/dashatar/dashatar.dart';
 import 'package:map_slide_puzzle/layout/layout.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:map_slide_puzzle/theme/theme.dart';
@@ -18,16 +21,81 @@ void main() {
       await tester.pumpApp(PuzzlePage());
       expect(find.byType(PuzzleView), findsOneWidget);
     });
+
+    testWidgets('provides all Dashatar themes to PuzzleView', (tester) async {
+      await tester.pumpApp(PuzzlePage());
+
+      final BuildContext puzzleViewContext =
+          tester.element(find.byType(PuzzleView));
+
+      final dashatarThemes =
+          puzzleViewContext.read<DashatarThemeBloc>().state.themes;
+
+      expect(
+        dashatarThemes,
+        equals([GreenDashatarTheme()]),
+      );
+    });
+
+    testWidgets(
+      'provides DashatarPuzzleBloc '
+      'with secondsToBegin equal to 3',
+      (tester) async {
+        await tester.pumpApp(PuzzlePage());
+
+        final BuildContext puzzleViewContext =
+            tester.element(find.byType(PuzzleView));
+
+        final secondsToBegin =
+            puzzleViewContext.read<DashatarPuzzleBloc>().state.secondsToBegin;
+
+        expect(
+          secondsToBegin,
+          equals(3),
+        );
+      },
+    );
+
+    testWidgets(
+      'provides TimerBloc '
+      'with initial state',
+      (tester) async {
+        await tester.pumpApp(PuzzlePage());
+
+        final BuildContext puzzleViewContext =
+            tester.element(find.byType(PuzzleView));
+
+        expect(
+          puzzleViewContext.read<TimerBloc>().state,
+          equals(TimerState()),
+        );
+      },
+    );
+
+    testWidgets(
+      'provides AudioControlBloc '
+      'with initial state',
+      (tester) async {
+        await tester.pumpApp(PuzzlePage());
+
+        final BuildContext puzzleViewContext =
+            tester.element(find.byType(PuzzleView));
+
+        expect(
+          puzzleViewContext.read<AudioControlBloc>().state,
+          equals(AudioControlState()),
+        );
+      },
+    );
   });
 
   group('PuzzleView', () {
-    late ThemeBloc themeBloc;
     late PuzzleTheme theme;
+    late DashatarThemeBloc dashatarThemeBloc;
     late PuzzleLayoutDelegate layoutDelegate;
+    late AudioControlBloc audioControlBloc;
 
     setUp(() {
-      final themeState = MockThemeState();
-      themeBloc = MockThemeBloc();
       theme = MockPuzzleTheme();
       layoutDelegate = MockPuzzleLayoutDelegate();
 
@@ -50,9 +118,23 @@ void main() {
 
       when(() => theme.layoutDelegate).thenReturn(layoutDelegate);
       when(() => theme.backgroundColor).thenReturn(Colors.black);
+      when(() => theme.isLogoColored).thenReturn(true);
+      when(() => theme.menuActiveColor).thenReturn(Colors.black);
+      when(() => theme.menuUnderlineColor).thenReturn(Colors.black);
+      when(() => theme.menuInactiveColor).thenReturn(Colors.black);
       when(() => theme.hasTimer).thenReturn(true);
-      when(() => themeState.theme).thenReturn(theme);
-      when(() => themeBloc.state).thenReturn(themeState);
+      when(() => theme.name).thenReturn('Name');
+      when(() => theme.audioControlOnAsset)
+          .thenReturn('assets/images/audio_control/simple_on.png');
+      when(() => theme.audioControlOffAsset)
+          .thenReturn('assets/images/audio_control/simple_off.png');
+
+      dashatarThemeBloc = MockDashatarThemeBloc();
+      when(() => dashatarThemeBloc.state)
+          .thenReturn(DashatarThemeState(themes: [GreenDashatarTheme()]));
+
+      audioControlBloc = MockAudioControlBloc();
+      when(() => audioControlBloc.state).thenReturn(AudioControlState());
     });
 
     setUpAll(() {
@@ -61,21 +143,26 @@ void main() {
     });
 
     testWidgets(
-      'renders Scaffold '
-      'with background color from theme',
+      'renders Scaffold with descendant AnimatedContainer  '
+      'using PuzzleTheme.backgroundColor as background color',
       (tester) async {
         const backgroundColor = Colors.orange;
         when(() => theme.backgroundColor).thenReturn(backgroundColor);
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         expect(
-          find.byWidgetPredicate(
-            (widget) =>
-                widget is Scaffold && widget.backgroundColor == backgroundColor,
+          find.descendant(
+            of: find.byType(Scaffold),
+            matching: find.byWidgetPredicate(
+              (widget) =>
+                  widget is AnimatedContainer &&
+                  widget.decoration == BoxDecoration(color: backgroundColor),
+            ),
           ),
           findsOneWidget,
         );
@@ -90,7 +177,8 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         expect(find.byKey(Key('puzzle_view_puzzle')), findsOneWidget);
@@ -105,56 +193,23 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         expect(find.byKey(Key('puzzle_view_puzzle')), findsOneWidget);
       },
     );
 
-    testWidgets('renders puzzle header', (tester) async {
-      await tester.pumpApp(
-        PuzzleView(),
-        themeBloc: themeBloc,
-      );
-
-      expect(find.byKey(Key('puzzle_header')), findsOneWidget);
-    });
-
     testWidgets('renders puzzle sections', (tester) async {
       await tester.pumpApp(
         PuzzleView(),
-        themeBloc: themeBloc,
+        dashatarThemeBloc: dashatarThemeBloc,
+        audioControlBloc: audioControlBloc,
       );
 
-      expect(find.byKey(Key('puzzle_sections')), findsOneWidget);
+      expect(find.byType(PuzzleSections), findsOneWidget);
     });
-
-    testWidgets(
-      'builds start section '
-      'with layoutDelegate.startSectionBuilder',
-      (tester) async {
-        await tester.pumpApp(
-          PuzzleView(),
-          themeBloc: themeBloc,
-        );
-
-        verify(() => layoutDelegate.startSectionBuilder(any())).called(1);
-      },
-    );
-
-    testWidgets(
-      'builds end section '
-      'with layoutDelegate.endSectionBuilder',
-      (tester) async {
-        await tester.pumpApp(
-          PuzzleView(),
-          themeBloc: themeBloc,
-        );
-
-        verify(() => layoutDelegate.endSectionBuilder(any())).called(1);
-      },
-    );
 
     testWidgets(
       'builds background '
@@ -162,7 +217,8 @@ void main() {
       (tester) async {
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         verify(() => layoutDelegate.backgroundBuilder(any())).called(1);
@@ -175,7 +231,8 @@ void main() {
       (tester) async {
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         await tester.pumpAndSettle();
@@ -197,7 +254,8 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         await tester.pumpAndSettle();
@@ -219,7 +277,8 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         await tester.pumpAndSettle();
@@ -244,7 +303,8 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          themeBloc: themeBloc,
+          dashatarThemeBloc: dashatarThemeBloc,
+          audioControlBloc: audioControlBloc,
         );
 
         await tester.pumpAndSettle();
@@ -252,27 +312,143 @@ void main() {
       },
     );
 
+    group('PuzzleSections', () {
+      late PuzzleBloc puzzleBloc;
+
+      setUp(() {
+        final puzzleState = MockPuzzleState();
+        final puzzle = MockPuzzle();
+        puzzleBloc = MockPuzzleBloc();
+
+        when(puzzle.getDimension).thenReturn(4);
+        when(() => puzzle.tiles).thenReturn([]);
+        when(() => puzzleState.puzzle).thenReturn(puzzle);
+        when(() => puzzleState.puzzleStatus).thenReturn(PuzzleStatus.complete);
+        whenListen(
+          puzzleBloc,
+          Stream.value(puzzleState),
+          initialState: puzzleState,
+        );
+      });
+
+      group('on a medium display', () {
+        testWidgets(
+          'builds start section '
+          'with layoutDelegate.startSectionBuilder',
+          (tester) async {
+            tester.setMediumDisplaySize();
+
+            await tester.pumpApp(
+              PuzzleSections(),
+              puzzleBloc: puzzleBloc,
+              audioControlBloc: audioControlBloc,
+            );
+
+            verify(() => layoutDelegate.startSectionBuilder(any())).called(1);
+          },
+        );
+
+        testWidgets(
+          'builds end section '
+          'with layoutDelegate.endSectionBuilder',
+          (tester) async {
+            tester.setMediumDisplaySize();
+
+            await tester.pumpApp(
+              PuzzleSections(),
+              puzzleBloc: puzzleBloc,
+              audioControlBloc: audioControlBloc,
+            );
+
+            verify(() => layoutDelegate.endSectionBuilder(any())).called(1);
+          },
+        );
+
+        testWidgets('renders PuzzleBoard', (tester) async {
+          tester.setMediumDisplaySize();
+
+          await tester.pumpApp(
+            PuzzleSections(),
+            puzzleBloc: puzzleBloc,
+            audioControlBloc: audioControlBloc,
+          );
+
+          expect(find.byType(PuzzleBoard), findsOneWidget);
+        });
+      });
+
+      group('on a small display', () {
+        testWidgets(
+          'builds start section '
+          'with layoutDelegate.startSectionBuilder',
+          (tester) async {
+            tester.setSmallDisplaySize();
+
+            await tester.pumpApp(
+              PuzzleSections(),
+              puzzleBloc: puzzleBloc,
+              audioControlBloc: audioControlBloc,
+            );
+
+            verify(() => layoutDelegate.startSectionBuilder(any())).called(1);
+          },
+        );
+
+        testWidgets(
+          'builds end section '
+          'with layoutDelegate.endSectionBuilder',
+          (tester) async {
+            tester.setSmallDisplaySize();
+
+            await tester.pumpApp(
+              PuzzleSections(),
+              puzzleBloc: puzzleBloc,
+              audioControlBloc: audioControlBloc,
+            );
+
+            verify(() => layoutDelegate.endSectionBuilder(any())).called(1);
+          },
+        );
+
+        testWidgets('renders PuzzleBoard', (tester) async {
+          tester.setSmallDisplaySize();
+
+          await tester.pumpApp(
+            PuzzleSections(),
+            puzzleBloc: puzzleBloc,
+            audioControlBloc: audioControlBloc,
+          );
+
+          expect(find.byType(PuzzleBoard), findsOneWidget);
+        });
+      });
+    });
+
     group('PuzzleBoard', () {
+      late PuzzleBloc puzzleBloc;
+
+      setUp(() {
+        puzzleBloc = MockPuzzleBloc();
+        final puzzleState = MockPuzzleState();
+        final puzzle = MockPuzzle();
+
+        when(puzzle.getDimension).thenReturn(4);
+        when(() => puzzle.tiles).thenReturn([]);
+        when(() => puzzleState.puzzle).thenReturn(puzzle);
+        when(() => puzzleState.puzzleStatus).thenReturn(PuzzleStatus.complete);
+        whenListen(
+          puzzleBloc,
+          Stream.value(puzzleState),
+          initialState: puzzleState,
+        );
+      });
+
       testWidgets(
         'adds TimerStopped to TimerBloc '
         'when the puzzle completes',
         (tester) async {
           final timerBloc = MockTimerBloc();
           final timerState = MockTimerState();
-          final puzzleBloc = MockPuzzleBloc();
-          final puzzleState = MockPuzzleState();
-          final puzzle = MockPuzzle();
-
-          when(puzzle.getDimension).thenReturn(4);
-          when(() => puzzle.tiles).thenReturn([]);
-          when(() => puzzleState.puzzle).thenReturn(puzzle);
-          when(() => puzzleState.puzzleStatus)
-              .thenReturn(PuzzleStatus.complete);
-          whenListen(
-            puzzleBloc,
-            Stream.value(puzzleState),
-            initialState: puzzleState,
-          );
 
           const secondsElapsed = 60;
           when(() => timerState.secondsElapsed).thenReturn(secondsElapsed);
@@ -280,7 +456,8 @@ void main() {
 
           await tester.pumpApp(
             PuzzleBoard(),
-            themeBloc: themeBloc,
+            dashatarThemeBloc: dashatarThemeBloc,
+            audioControlBloc: audioControlBloc,
             timerBloc: timerBloc,
             puzzleBloc: puzzleBloc,
           );
@@ -288,6 +465,16 @@ void main() {
           verify(() => timerBloc.add(TimerStopped())).called(1);
         },
       );
+
+      testWidgets('renders PuzzleKeyboardHandler', (tester) async {
+        await tester.pumpApp(
+          PuzzleBoard(),
+          puzzleBloc: puzzleBloc,
+          audioControlBloc: audioControlBloc,
+        );
+
+        expect(find.byType(PuzzleKeyboardHandler), findsOneWidget);
+      });
     });
   });
 }

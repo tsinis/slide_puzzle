@@ -4,12 +4,10 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/timer/timer.dart';
 import 'package:mocktail/mocktail.dart';
 
-// ignore: prefer-match-file-name
-class MockTicker extends Mock implements Ticker {}
+import '../../helpers/helpers.dart';
 
 void main() {
   final ticker = MockTicker();
@@ -92,11 +90,4 @@ void main() {
       );
     });
   });
-}
-
-/// Waits for n scheduled microtasks before completing this future.
-Future<void> handleMicrotasks(int n) async {
-  for (var i = 0; i < n; i++) {
-    await Future.microtask(() {});
-  }
 }

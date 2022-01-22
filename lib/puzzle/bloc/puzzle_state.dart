@@ -3,13 +3,6 @@
 part of 'puzzle_bloc.dart';
 
 class PuzzleState extends Equatable {
-  /// Number representing how many moves have been made on the current puzzle.
-  ///
-  /// The number of moves is not always the same as the total number of tiles
-  /// moved. If a row/column of 2+ tiles are moved from one tap, one move is
-  /// added.
-  final int numberOfMoves;
-
   /// [Puzzle] containing the current tile arrangement.
   final Puzzle puzzle;
 
@@ -27,6 +20,13 @@ class PuzzleState extends Equatable {
 
   /// Number of tiles currently in their correct position.
   final int numberOfCorrectTiles;
+
+  /// Number representing how many moves have been made on the current puzzle.
+  ///
+  /// The number of moves is not always the same as the total number of tiles
+  /// moved. If a row/column of 2+ tiles are moved from one tap, one move is
+  /// added.
+  final int numberOfMoves;
 
   /// Number of tiles currently not in their correct position.
   int get numberOfTilesLeft => puzzle.tiles.length - numberOfCorrectTiles - 1;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../colors/colors.dart';
+import '../../dashatar/themes/green_dashatar_theme.dart';
 import '../../layout/layout.dart';
 import '../../typography/typography.dart';
+import '../theme.dart';
 
 /// {@template puzzle_title}
 /// Displays the title of the puzzle in the given color.
@@ -11,39 +12,46 @@ class PuzzleTitle extends StatelessWidget {
   /// The title to be displayed.
   final String title;
 
-  /// The color of the [title], defaults to [PuzzleColors.primary1].
+  /// The color of [title], defaults to [PuzzleTheme.titleColor].
   final Color? color;
 
   /// {@macro puzzle_title}
-  const PuzzleTitle({
-    required this.title,
-    this.color = PuzzleColors.primary1,
-    Key? key,
-  }) : super(key: key);
+  const PuzzleTitle({required this.title, this.color, Key? key})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ResponsiveLayoutBuilder(
-        small: (context, child) => Center(
-          child: SizedBox(
-            width: 300,
-            child: Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: PuzzleTextStyle.headline3.copyWith(
-                  color: color,
-                ),
-              ),
-            ),
+  Widget build(BuildContext context) {
+    const theme = GreenDashatarTheme();
+    final titleColor = color ?? theme.titleColor;
+
+    return ResponsiveLayoutBuilder(
+      small: (context, child) => Center(
+        child: SizedBox(
+          width: 300,
+          child: Center(
+            child: child,
           ),
         ),
-        medium: (context, child) => Center(
+      ),
+      medium: (context, child) => Center(
+        child: child,
+      ),
+      child: (currentSize) {
+        final textStyle = PuzzleTextStyle.headline3.copyWith(color: titleColor);
+
+        final textAlign = currentSize == ResponsiveLayoutSize.small
+            ? TextAlign.center
+            : TextAlign.left;
+
+        return AnimatedDefaultTextStyle(
+          style: textStyle,
+          duration: PuzzleThemeAnimationDuration.textStyle,
           child: Text(
             title,
-            style: PuzzleTextStyle.headline3.copyWith(
-              color: color,
-            ),
+            textAlign: textAlign,
           ),
-        ),
-      );
+        );
+      },
+    );
+  }
 }

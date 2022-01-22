@@ -21,11 +21,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<PuzzleReset>(_onPuzzleReset);
   }
 
-  void _onPuzzleInitialized(
-    PuzzleInitialized event,
-    Emitter<PuzzleState> emit,
-  ) {
-    final puzzle = _generatePuzzle(_size, shuffle: event.shufflePuzzle);
+  void _onPuzzleInitialized(PuzzleInitialized _, Emitter<PuzzleState> emit) {
+    final puzzle = _generatePuzzle(_size);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
@@ -85,7 +82,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   /// Build a randomized, solvable puzzle of the given size.
-  Puzzle _generatePuzzle(int size, {bool shuffle = true}) {
+  Puzzle _generatePuzzle(int size) {
     final correctPositions = <Position>[];
     final currentPositions = <Position>[];
     final whitespacePosition = Position(x: size, y: size);
@@ -104,34 +101,12 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
     }
 
-    if (shuffle) {
-      // Randomize only the current tile positions.
-      currentPositions.shuffle(random);
-    }
+    currentPositions.shuffle(random);
 
-    var tiles = _getTileListFromPositions(
-      size,
-      correctPositions,
-      currentPositions,
-    );
+    final tiles =
+        _getTileListFromPositions(size, correctPositions, currentPositions);
 
-    var puzzle = Puzzle(tiles: tiles);
-
-    if (shuffle) {
-      // Assign the tiles new current positions until the puzzle is solvable and
-      // zero tiles are in their correct position.
-      while (!puzzle.isSolvable() || puzzle.getNumberOfCorrectTiles() != 0) {
-        currentPositions.shuffle(random);
-        tiles = _getTileListFromPositions(
-          size,
-          correctPositions,
-          currentPositions,
-        );
-        puzzle = Puzzle(tiles: tiles);
-      }
-    }
-
-    return puzzle;
+    return Puzzle(tiles: tiles);
   }
 
   /// Build a list of tiles - giving each tile their correct position and a

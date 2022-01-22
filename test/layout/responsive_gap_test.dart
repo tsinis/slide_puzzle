@@ -11,6 +11,7 @@ void main() {
   group('ResponsiveGap', () {
     const smallGap = 10.0;
     const mediumGap = 20.0;
+
     testWidgets('renders a medium gap on a medium display', (tester) async {
       tester.setMediumDisplaySize();
 

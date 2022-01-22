@@ -17,20 +17,6 @@ void main() {
   );
 
   group('PuzzleEvent', () {
-    group('PuzzleInitialized', () {
-      test('supports value comparisons', () {
-        expect(
-          PuzzleInitialized(shufflePuzzle: true),
-          equals(PuzzleInitialized(shufflePuzzle: true)),
-        );
-
-        expect(
-          PuzzleInitialized(shufflePuzzle: true),
-          isNot(PuzzleInitialized(shufflePuzzle: false)),
-        );
-      });
-    });
-
     group('TileTapped', () {
       test('supports value comparisons', () {
         expect(TileTapped(tile1), equals(TileTapped(tile1)));

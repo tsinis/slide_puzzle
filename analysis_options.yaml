@@ -69,6 +69,7 @@ dart_code_metrics:
     - avoid-unused-parameters
     - avoid-wrapping-in-padding
     - binary-expression-operand-order
+    - check-unused-code
     - double-literal-format
     - member-ordering-extended
     - newline-before-return
