@@ -34,12 +34,8 @@ class _AppState extends State<App> {
   static const localAssetsPrefix = 'assets/';
 
   static final audioControlAssets = [
-    'assets/images/audio_control/simple_on.png',
-    'assets/images/audio_control/simple_off.png',
     'assets/images/audio_control/dashatar_on.png',
     'assets/images/audio_control/green_dashatar_off.png',
-    'assets/images/audio_control/blue_dashatar_off.png',
-    'assets/images/audio_control/yellow_dashatar_off.png',
   ];
 
   static final audioAssets = [

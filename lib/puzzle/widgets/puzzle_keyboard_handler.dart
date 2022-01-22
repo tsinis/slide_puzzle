@@ -75,7 +75,6 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
   void _handleKeyEvent(RawKeyEvent event) {
     // The user may move tiles only when the puzzle is started.
-    // There's no need to check the Simple theme as it is started by default.
     final canMoveTiles = !(context.read<DashatarPuzzleBloc>().state.status !=
         DashatarPuzzleStatus.started);
 

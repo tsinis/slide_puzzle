@@ -116,17 +116,9 @@
             }
         }
     },
-    "dashatarBlueDashLabelText": "Dumbbell Dash",
-    "@dashatarBlueDashLabelText": {
-        "description": "Semantic label for the blue Dash"
-    },
     "dashatarGreenDashLabelText": "Skateboard Dash",
     "@dashatarGreenDashLabelText": {
         "description": "Semantic label for the green Dash"
-    },
-    "dashatarYellowDashLabelText": "Sandwich Dash",
-    "@dashatarYellowDashLabelText": {
-        "description": "Semantic label for the yellow Dash"
     },
     "dashatarSuccessShareYourScoreTitle": "Share your score!",
     "@dashatarSuccessShareYourScoreTitle": {
