@@ -5,10 +5,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'animated_tile.dart';
 
 import '../../audio_control/audio_control.dart';
 import '../../helpers/helpers.dart';
-import '../../l10n/l10n.dart';
 import '../../layout/layout.dart';
 import '../../models/models.dart';
 import '../../puzzle/puzzle.dart';
@@ -91,7 +91,6 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
   @override
   Widget build(BuildContext context) {
     final size = widget.state.puzzle.getDimension();
-    const theme = GreenDashatarTheme();
     final status =
         context.select((DashatarPuzzleBloc bloc) => bloc.state.status);
     final hasStarted = status == DashatarPuzzleStatus.started;
@@ -139,22 +138,12 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
             child: ScaleTransition(
               key: Key('dashatar_puzzle_tile_scale_${widget.tile.value}'),
               scale: _scale,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: canPress
-                    ? () {
-                        context.read<PuzzleBloc>().add(TileTapped(widget.tile));
-                        unawaited(_audioPlayer?.replay());
-                      }
-                    : null,
-                icon: Image.asset(
-                  theme.dashAssetForTile(widget.tile),
-                  semanticLabel: context.l10n.puzzleTileLabelText(
-                    widget.tile.value.toString(),
-                    widget.tile.currentPosition.x.toString(),
-                    widget.tile.currentPosition.y.toString(),
-                  ),
-                ),
+              child: AnimatedTile(
+                onPressed: () {
+                  context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                  unawaited(_audioPlayer?.replay());
+                },
+                index: ValueKey<int>(widget.tile.value),
               ),
             ),
           ),

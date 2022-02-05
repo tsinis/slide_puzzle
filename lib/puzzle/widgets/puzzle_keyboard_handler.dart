@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../audio_control/audio_control.dart';
-import '../../dashatar/dashatar.dart';
 import '../../helpers/helpers.dart';
+import '../../map/dashatar.dart';
 import '../../models/models.dart';
 import '../puzzle.dart';
 

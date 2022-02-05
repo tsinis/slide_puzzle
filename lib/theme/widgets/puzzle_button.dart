@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../colors/colors.dart';
-import '../../dashatar/themes/green_dashatar_theme.dart';
+import '../../map/themes/green_dashatar_theme.dart';
 import '../../typography/typography.dart';
 import '../theme.dart';
 

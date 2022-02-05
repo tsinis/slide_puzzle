@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../audio_control/audio_control.dart';
-import '../../dashatar/dashatar.dart';
 import '../../layout/layout.dart';
+import '../../map/dashatar.dart';
 import '../../models/models.dart';
 import '../../theme/theme.dart';
 import '../../timer/timer.dart';

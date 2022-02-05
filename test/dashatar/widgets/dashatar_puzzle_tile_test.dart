@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
-import 'package:map_slide_puzzle/dashatar/dashatar.dart';
+import 'package:map_slide_puzzle/map/dashatar.dart';
 import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:mocktail/mocktail.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../dashatar/themes/green_dashatar_theme.dart';
 import '../../l10n/l10n.dart';
 import '../../layout/layout.dart';
+import '../../map/themes/green_dashatar_theme.dart';
 import '../../typography/typography.dart';
 import '../theme.dart';
 

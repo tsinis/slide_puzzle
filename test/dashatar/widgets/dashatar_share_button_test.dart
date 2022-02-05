@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
-import 'package:map_slide_puzzle/dashatar/dashatar.dart';
+import 'package:map_slide_puzzle/map/dashatar.dart';
 import 'package:mocktail/mocktail.dart';
 // ignore: depend_on_referenced_packages
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';

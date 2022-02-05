@@ -98,6 +98,7 @@ linter:
     flutter_style_todos: false # for Flutter Team only
     prefer_double_quotes: false # against prefer_single_quotes
     prefer_final_parameters: false # against avoid_final_parameters
+    public_member_api_docs: false //TODO revert to true later.
     sort_constructors_first: false # against member-ordering-extended
     sort_unnamed_constructors_first: false # against member-ordering-extended
     unnecessary_final: false # against prefer_final_locals
@@ -170,7 +171,6 @@ linter:
     prefer_typing_uninitialized_variables: true
     prefer_void_to_null: true
     provide_deprecation_message: true
-    public_member_api_docs: true
     sized_box_for_whitespace: true
     sort_child_properties_last: true
     sort_pub_dependencies: true

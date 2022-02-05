@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
-import 'package:map_slide_puzzle/dashatar/dashatar.dart';
 import 'package:map_slide_puzzle/l10n/l10n.dart';
+import 'package:map_slide_puzzle/map/dashatar.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:map_slide_puzzle/timer/timer.dart';
 

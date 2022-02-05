@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:map_slide_puzzle/dashatar/dashatar.dart';
+import 'package:map_slide_puzzle/map/dashatar.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
@@ -29,7 +29,7 @@ void main() {
         when(() => tile.value).thenReturn(tileValue);
         expect(
           GreenDashatarTheme().dashAssetForTile(tile),
-          equals('assets/images/dashatar/green/6.png'),
+          equals('assets/images/map/green/6.png'),
         );
       });
     });
