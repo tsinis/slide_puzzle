@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'animated_tile.dart';
 
 import '../../audio_control/audio_control.dart';
 import '../../helpers/helpers.dart';
@@ -14,6 +13,7 @@ import '../../models/models.dart';
 import '../../puzzle/puzzle.dart';
 import '../../theme/themes/themes.dart';
 import '../dashatar.dart';
+import 'animated_tile.dart';
 
 abstract class _TileSize {
   static const double small = 77;
