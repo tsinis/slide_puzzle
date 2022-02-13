@@ -17,9 +17,7 @@ class AppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ResponsiveLayoutBuilder(
         small: (_, __) => Material(
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
+          child: SizedBox.expand(
             child: child,
           ),
         ),

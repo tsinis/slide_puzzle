@@ -60,6 +60,7 @@ dart_code_metrics:
     - avoid-nested-conditional-expressions:
       acceptable-level: 1
     - always-remove-listener
+    - avoid-dynamic
     - avoid-global-state
     - avoid-missing-enum-constant-in-map
     - avoid-throw-in-catch-block
@@ -76,6 +77,7 @@ dart_code_metrics:
     - no-boolean-literal-compare
     - no-equal-then-else
     - no-object-declaration
+    - prefer-async-await
     - prefer-const-border-radius
     - prefer-correct-type-name
     - prefer-first

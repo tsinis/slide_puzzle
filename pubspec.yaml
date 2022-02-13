@@ -22,13 +22,13 @@ dependencies:
   gap: ^2.0.0
   google_fonts: 2.2.0
   intl: ^0.17.0
-  just_audio: ^0.9.18
+  just_audio: ^0.9.20
   universal_platform: ^1.0.0+1
-  url_launcher: ^6.0.18
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   bloc_test: ^9.0.2
-  dart_code_metrics: ^4.10.1
+  dart_code_metrics: ^4.11.0-dev.1
   fake_async: ^1.2.0
   flutter_lints: ^1.0.4
   flutter_test:

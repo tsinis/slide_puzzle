@@ -5,9 +5,17 @@ import 'package:flutter/material.dart';
 import '../models/animated_background_widget.dart';
 import '../models/animated_foreground_widget.dart';
 import '../models/user_control.dart';
+import 'foregrounds/balloon.dart';
+import 'foregrounds/bridge.dart';
+import 'foregrounds/crane.dart';
+import 'foregrounds/gate.dart';
+import 'foregrounds/lighthouse.dart';
 import 'foregrounds/smoke.dart';
+import 'foregrounds/submarine.dart';
 import 'foregrounds/telescope.dart';
+import 'foregrounds/train.dart';
 import 'foregrounds/wheel.dart';
+import 'foregrounds/windmill.dart';
 
 class AnimatedTile extends StatefulWidget {
   final ValueKey<int> index;
@@ -30,22 +38,22 @@ class _AnimatedTileState extends State<AnimatedTile>
       StreamController<UserControl>();
   final List<AnimatedForegroundWidget> _types =
       const <AnimatedForegroundWidget>[
+    Bridge(),
+    Balloon(),
+    Train(),
+    Gate(),
+    Submarine(),
+    Crane(),
+    Lighthouse(),
+    Windmill(),
     Smoke(),
     Telescope(),
     Wheel(),
-    Smoke(),
-    Telescope(),
-    Wheel(),
-    Smoke(),
-    Telescope(),
-    Wheel(),
-    Smoke(),
-    Telescope(),
-    Wheel(),
-    Smoke(),
-    Telescope(),
-    Wheel(),
-    Smoke(),
+    Balloon(),
+    Bridge(),
+    Balloon(),
+    Train(),
+    Gate(),
   ];
 
   AnimatedForegroundWidget get foreground =>

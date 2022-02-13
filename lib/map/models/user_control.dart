@@ -8,6 +8,7 @@ extension ControlEventExtension on UserControl {
     T Function()? onLongPress,
   }) {
     if (this == UserControl.hover && onHover != null) {
+      return onHover();
     } else if (this == UserControl.singlePress && onPress != null) {
       return onPress();
     } else if (this == UserControl.longPress && onLongPress != null) {

@@ -7,11 +7,10 @@ import '../../models/animated_foreground_widget.dart';
 import '../../models/user_control.dart';
 
 class Smoke extends AnimatedForegroundWidget {
-  final Size size;
+
 
   const Smoke({
     Stream<UserControl>? userControlStream,
-    this.size = const Size(100, 100),
     bool isDone = false,
     Key? key,
   }) : super(
@@ -19,6 +18,7 @@ class Smoke extends AnimatedForegroundWidget {
             firstColor: Colors.grey,
             loopDuration: Duration(seconds: 3),
           ),
+          size: const Size(100, 100),
           curve: Curves.decelerate,
           userControlStream: userControlStream,
           isDone: isDone,
@@ -160,9 +160,9 @@ class SmokeCloud {
   final List<Color> _colors = <Color>[];
 
   SmokeCloud(this.size, this.x, this.y) {
-    final _generator = Random();
-    final random = _generator.nextDouble();
-    speed = Offset(-6 + _generator.nextDouble() * 10, -20 + random * 16);
+    final generator = Random();
+    final random = generator.nextDouble();
+    speed = Offset(-6 + generator.nextDouble() * 10, -20 + random * 16);
     location = Offset((size.width / 2) + x, (size.height * 3) + y);
     radius = 12 + random * 20;
     life = 2 + random * 100;

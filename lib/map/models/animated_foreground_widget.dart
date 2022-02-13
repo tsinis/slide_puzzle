@@ -7,7 +7,7 @@ import 'user_control.dart';
 abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
   final Stream<UserControl>? userControlStream;
   final AnimatedForegroundSpecs specification;
-  final double scale;
+  final Size size;
   final double x;
   final double y;
 
@@ -18,7 +18,7 @@ abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
     required this.specification,
     Curve curve = Curves.linear,
     this.userControlStream,
-    this.scale = 1,
+    this.size = const Size.square(100),
     this.x = 50,
     this.y = 50,
     Key? key,

@@ -37,11 +37,12 @@ class _AnimatedTextButtonState
   ButtonStyleTween? _style;
 
   @override
+  // ignore: avoid-dynamic, avoid_annotating_with_dynamic
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _style = visitor(
       _style,
       widget.style,
-      // ignore: avoid_annotating_with_dynamic
+      // ignore: avoid-dynamic, avoid_annotating_with_dynamic
       (dynamic value) => ButtonStyleTween(begin: value as ButtonStyle),
     ) as ButtonStyleTween?;
   }
