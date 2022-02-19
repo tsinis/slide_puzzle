@@ -82,22 +82,33 @@ class _Puzzle extends StatelessWidget {
     const theme = GreenDashatarTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return GridPaper(
-      interval: 1000,
-      divisions: 3,
-      subdivisions: 3,
-      child: LayoutBuilder(
-        builder: (context, constraints) => Stack(
-          children: [
-            SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: const PuzzleSections(),
+    return LayoutBuilder(
+      builder: (context, constraints) => Stack(
+        alignment: Alignment.center,
+        children: [
+          GridPaper(
+            interval: 1000,
+            divisions: 3,
+            subdivisions: 3,
+            child: UnconstrainedBox(
+              child: SizedBox(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: theme.layoutDelegate.backgroundBuilder(state),
               ),
             ),
-            theme.layoutDelegate.backgroundBuilder(state),
-          ],
-        ),
+          ),
+          SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: const FittedBox(
+                child: PuzzleSections(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -139,7 +150,9 @@ class PuzzleSections extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          theme.layoutDelegate.startSectionBuilder(state),
+          UnconstrainedBox(
+            child: theme.layoutDelegate.startSectionBuilder(state),
+          ),
           const ResponsiveGap(small: 8, medium: 16),
           const PuzzleBoard(),
           const ResponsiveGap(small: 16, medium: 24),

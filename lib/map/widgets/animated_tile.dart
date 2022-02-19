@@ -10,10 +10,12 @@ import 'foregrounds/bridge.dart';
 import 'foregrounds/crane.dart';
 import 'foregrounds/gate.dart';
 import 'foregrounds/lighthouse.dart';
+import 'foregrounds/plane.dart';
 import 'foregrounds/smoke.dart';
 import 'foregrounds/submarine.dart';
 import 'foregrounds/telescope.dart';
 import 'foregrounds/train.dart';
+import 'foregrounds/whale.dart';
 import 'foregrounds/wheel.dart';
 import 'foregrounds/windmill.dart';
 
@@ -38,6 +40,8 @@ class _AnimatedTileState extends State<AnimatedTile>
       StreamController<UserControl>();
   final List<AnimatedForegroundWidget> _types =
       const <AnimatedForegroundWidget>[
+    Plane(),
+    Whale(),
     Bridge(),
     Balloon(),
     Train(),
@@ -52,8 +56,6 @@ class _AnimatedTileState extends State<AnimatedTile>
     Balloon(),
     Bridge(),
     Balloon(),
-    Train(),
-    Gate(),
   ];
 
   AnimatedForegroundWidget get foreground =>
