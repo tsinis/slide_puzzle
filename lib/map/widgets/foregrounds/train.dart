@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Train extends AnimatedForegroundWidget {
   const Train({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.train(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
@@ -18,26 +18,23 @@ class Train extends AnimatedForegroundWidget {
             thirdColor: Color(0xFF5F5F5F),
             loopDuration: Duration(milliseconds: 1500),
           ),
-          size: const Size(100, 72),
+          size: const Size(250, 88),
           curve: Curves.slowMiddle,
           userControlStream: userControlStream,
-          isDone: isDone,
-          x: 12,
-          y: 130,
-          key: key,
+          status: status,
+          x: 6,
+          y: 95.5,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Train(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -64,7 +61,7 @@ class _TrainState extends State<Train> with SingleTickerProviderStateMixin {
         curve: widget.curve,
       ),
     );
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);
@@ -79,143 +76,147 @@ class _TrainState extends State<Train> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(left: widget.x, top: widget.y),
-        child: SizedBox.fromSize(
-          size: widget.size,
-          child: ClipRect(
-            child: Transform.rotate(
-              angle: 50 * (math.pi / 180),
-              child: AnimatedBuilder(
-                animation: _animation,
-                builder: (_, child) => SlideTransition(
-                  position: _animation,
-                  child: child,
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      top: 3,
-                      left: 0,
-                      child: Container(
-                        width: 44,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3)),
-                          color: widget.specification.firstColor,
+        child: Transform.scale(
+          scale: 1.32,
+          child: SizedBox.fromSize(
+            size: widget.size,
+            child: ClipRect(
+              child: Transform.rotate(
+                alignment: const Alignment(-0.44, 0),
+                angle: 40 * (math.pi / 180),
+                child: AnimatedBuilder(
+                  animation: _animation,
+                  builder: (_, child) => SlideTransition(
+                    position: _animation,
+                    child: child,
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        top: 3,
+                        left: 0,
+                        child: Container(
+                          width: 44,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(3)),
+                            color: widget.specification.firstColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 4,
-                      child: Container(
-                        width: 36,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3.5)),
-                          color: widget.specification.firstColor,
+                      Positioned(
+                        top: 0,
+                        left: 4,
+                        child: Container(
+                          width: 36,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(3.5)),
+                            color: widget.specification.firstColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 7,
-                      left: 2,
-                      child: Container(
-                        width: 40,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3.5)),
-                          color: widget.specification.thirdColor,
+                      Positioned(
+                        top: 7,
+                        left: 2,
+                        child: Container(
+                          width: 40,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(3.5)),
+                            color: widget.specification.thirdColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 1,
-                      left: 6,
-                      child: Container(
-                        width: 4,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 1,
+                        left: 6,
+                        child: Container(
+                          width: 4,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 1,
-                      left: 34,
-                      child: Container(
-                        width: 4,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 1,
+                        left: 34,
+                        child: Container(
+                          width: 4,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      left: 12,
-                      child: Container(
-                        width: 2,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 3,
+                        left: 12,
+                        child: Container(
+                          width: 2,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      left: 26,
-                      child: Container(
-                        width: 2,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 3,
+                        left: 26,
+                        child: Container(
+                          width: 2,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      left: 16,
-                      child: Container(
-                        width: 2,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 3,
+                        left: 16,
+                        child: Container(
+                          width: 2,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      left: 30,
-                      child: Container(
-                        width: 2,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 3,
+                        left: 30,
+                        child: Container(
+                          width: 2,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      left: 21,
-                      child: Container(
-                        width: 2,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.specification.secondColor,
+                      Positioned(
+                        top: 3,
+                        left: 21,
+                        child: Container(
+                          width: 2,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.specification.secondColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

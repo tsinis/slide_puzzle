@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'animated_stateful_widget.dart';
+import 'animated_widget_key.dart';
 
 class AnimatedBackgroundWidget extends AnimatedStatefulWidget {
-  final int _index;
-
-  const AnimatedBackgroundWidget(
-    this._index, {
+  const AnimatedBackgroundWidget({
+    required AnimatedWidgetKey status,
     Curve curve = Curves.easeOutSine,
-    bool isDone = false,
-    Key? key,
-  }) : super(key: key, isDone: isDone, curve: curve);
+  }) : super(status: status, curve: curve);
 
   @override
   State<AnimatedBackgroundWidget> createState() =>
@@ -30,12 +27,12 @@ class _AnimatedBackgroundWidgetState extends State<AnimatedBackgroundWidget>
     _controller = AnimationController(
       duration: widget.moveDuration,
       vsync: this,
-    );
+    )..value = 1;
     _animation = CurvedAnimation(
       parent: _controller,
       curve: widget.curve,
     );
-    widget.isDone ? _controller.reverse() : _controller.forward();
+    widget.status.isDone ? _controller.reverse() : _controller.forward();
   }
 
   @override
@@ -56,10 +53,14 @@ class _AnimatedBackgroundWidgetState extends State<AnimatedBackgroundWidget>
           animation: _animation,
           builder: (_, __) => ColorFiltered(
             colorFilter: ColorFilter.mode(
-              Colors.grey.withOpacity(widget.isDone ? 1 : _controller.value),
+              Colors.grey.withOpacity(
+                widget.status.isDone ? 0 : _controller.value,
+              ),
               BlendMode.saturation,
             ),
-            child: SvgPicture.asset('assets/vectors/${widget._index}.svg'),
+            child: SvgPicture.asset(
+              'assets/vectors/${widget.status.backgroundIndex}.svg',
+            ),
           ),
         ),
       );

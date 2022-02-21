@@ -2,38 +2,35 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 import 'pivot_transition.dart';
 
 class Bridge extends AnimatedForegroundWidget {
   const Bridge({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.bridge(),
     Stream<UserControl>? userControlStream,
-    bool isDone = true,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.black,
+            firstColor: Colors.amber,
             loopDuration: Duration(milliseconds: 2500),
           ),
           curve: Curves.easeInSine,
           userControlStream: userControlStream,
-          isDone: isDone,
-          x: 105,
-          y: 160,
-          key: key,
+          status: status,
+          x: 89,
+          y: 58,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Bridge(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -47,7 +44,7 @@ class _BridgeState extends State<Bridge> with SingleTickerProviderStateMixin {
 
   late final SizedBox _line = SizedBox(
     height: 20,
-    width: 2,
+    width: 3,
     child: ColoredBox(color: widget.specification.firstColor),
   );
 
@@ -65,7 +62,7 @@ class _BridgeState extends State<Bridge> with SingleTickerProviderStateMixin {
     );
     _reverseAnimation = ReverseAnimation(_animation);
 
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);
@@ -81,25 +78,28 @@ class _BridgeState extends State<Bridge> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(left: widget.x, top: widget.y),
-        child: Row(
-          children: <Widget>[
-            PivotTransition(
-              rotate: _animation,
-              alignment: Alignment.bottomRight,
-              child: _line,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: _line.height! * 2 - _line.width! - 1,
-                bottom: _line.width! * 2,
-              ),
-              child: PivotTransition(
-                rotate: _reverseAnimation,
+        child: Transform.scale(
+          scale: 1.45,
+          child: Row(
+            children: <Widget>[
+              PivotTransition(
+                rotate: _animation,
                 alignment: Alignment.bottomRight,
                 child: _line,
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(
+                  left: _line.height! * 2 - _line.width! - 1,
+                  bottom: _line.width! * 2,
+                ),
+                child: PivotTransition(
+                  rotate: _reverseAnimation,
+                  alignment: Alignment.bottomRight,
+                  child: _line,
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }

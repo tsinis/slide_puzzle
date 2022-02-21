@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Telescope extends AnimatedForegroundWidget {
   const Telescope({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.telescope(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
@@ -21,21 +21,20 @@ class Telescope extends AnimatedForegroundWidget {
           ),
           curve: Curves.decelerate,
           userControlStream: userControlStream,
-          isDone: isDone,
-          key: key,
+          status: status,
+          y: 30,
+          x: 70,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Telescope(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -59,7 +58,7 @@ class _TelescopeState extends State<Telescope>
       parent: _controller,
       curve: widget.curve,
     );
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);

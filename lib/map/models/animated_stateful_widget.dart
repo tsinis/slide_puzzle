@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'animated_widget_key.dart';
+
 abstract class AnimatedStatefulWidget extends StatefulWidget {
-  final bool isDone;
+  final AnimatedWidgetKey status;
   final Curve curve;
   final Duration moveDuration;
 
   const AnimatedStatefulWidget({
-    required this.isDone,
+    required this.status,
     required this.curve,
     this.moveDuration = const Duration(milliseconds: 500),
-    Key? key,
-  }) : super(key: key);
+  }) : super(key: status);
 }

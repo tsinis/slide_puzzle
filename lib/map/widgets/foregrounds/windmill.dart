@@ -4,37 +4,36 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Windmill extends AnimatedForegroundWidget {
   const Windmill({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.windmill(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.grey,
+            firstColor: Colors.amber,
             secondColor: Colors.white,
             thirdColor: Color(0xFF5F5F5F),
             loopDuration: Duration(milliseconds: 2500),
           ),
           curve: Curves.fastLinearToSlowEaseIn,
           userControlStream: userControlStream,
-          isDone: isDone,
-          key: key,
+          status: status,
+          x: 0,
+          y: 40,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Windmill(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -55,7 +54,7 @@ class _WindmillState extends State<Windmill>
       curve: widget.curve,
     );
 
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);
@@ -70,15 +69,18 @@ class _WindmillState extends State<Windmill>
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(left: widget.x, top: widget.y),
-        child: AnimatedBuilder(
-          animation: _animation,
-          builder: (_, __) => CustomPaint(
-            willChange: true,
-            painter: _WindmillPainter(
-              angle: _animation.value,
-              primaryColor: widget.specification.firstColor,
-              secondaryColor: widget.specification.secondColor,
-              thirdColor: widget.specification.thirdColor,
+        child: Transform.scale(
+          scale: 1.78,
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (_, __) => CustomPaint(
+              willChange: true,
+              painter: _WindmillPainter(
+                angle: _animation.value,
+                primaryColor: widget.specification.firstColor,
+                secondaryColor: widget.specification.secondColor,
+                thirdColor: widget.specification.thirdColor,
+              ),
             ),
           ),
         ),

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Balloon extends AnimatedForegroundWidget {
   const Balloon({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.balloon(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.orange,
@@ -21,23 +21,20 @@ class Balloon extends AnimatedForegroundWidget {
           ),
           curve: Curves.easeInOutCubicEmphasized,
           userControlStream: userControlStream,
-          isDone: isDone,
-          x: 35,
-          y: 20,
-          key: key,
+          status: status,
+          x: 145,
+          y: 40,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Balloon(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -61,7 +58,7 @@ class _BalloonState extends State<Balloon> with SingleTickerProviderStateMixin {
     ).animate(
       CurvedAnimation(parent: _controller, curve: widget.curve),
     );
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);

@@ -233,6 +233,11 @@ class _PuzzleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     const theme = GreenDashatarTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final isComplete = state.puzzleStatus == PuzzleStatus.complete;
+
+    if (isComplete) {
+      return theme.layoutDelegate.tileBuilder(tile, state);
+    }
 
     return tile.isWhitespace
         ? theme.layoutDelegate.whitespaceTileBuilder()

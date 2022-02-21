@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Whale extends AnimatedForegroundWidget {
   const Whale({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.whale(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
@@ -20,21 +20,20 @@ class Whale extends AnimatedForegroundWidget {
           ),
           curve: Curves.decelerate,
           userControlStream: userControlStream,
-          isDone: isDone,
-          key: key,
+          status: status,
+          x: 40,
+          y: 66,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Whale(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -51,7 +50,7 @@ class _WhaleState extends State<Whale> with SingleTickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this);
 
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _animation = CurvedAnimation(
         parent: _controller,
         curve: Curves.fastLinearToSlowEaseIn,
@@ -79,7 +78,7 @@ class _WhaleState extends State<Whale> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.only(left: widget.x, top: widget.y),
         child: RotatedBox(
           quarterTurns: 0,
           child: RotationTransition(

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Gate extends AnimatedForegroundWidget {
   const Gate({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.gate(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.black,
@@ -16,23 +16,20 @@ class Gate extends AnimatedForegroundWidget {
           ),
           curve: Curves.bounceIn,
           userControlStream: userControlStream,
-          isDone: isDone,
+          status: status,
           x: 105,
           y: 150,
-          key: key,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Gate(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -59,7 +56,7 @@ class _GateState extends State<Gate> with SingleTickerProviderStateMixin {
         curve: widget.curve,
       ),
     );
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);

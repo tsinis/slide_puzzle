@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'animated_foreground_specs.dart';
 import 'animated_stateful_widget.dart';
+import 'animated_widget_key.dart';
 import 'user_control.dart';
 
 abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
@@ -11,18 +12,18 @@ abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
   final double x;
   final double y;
 
-  Duration get duration => isDone ? specification.loopDuration : moveDuration;
+  Duration get duration =>
+      status.isDone ? specification.loopDuration : moveDuration;
 
   const AnimatedForegroundWidget({
-    required bool isDone,
+    required AnimatedWidgetKey status,
     required this.specification,
     Curve curve = Curves.linear,
     this.userControlStream,
     this.size = const Size.square(100),
     this.x = 50,
     this.y = 50,
-    Key? key,
-  }) : super(key: key, isDone: isDone, curve: curve);
+  }) : super(status: status, curve: curve);
 
   void listenUserControls(AnimationController animationController) {
     userControlStream?.listen(
@@ -40,9 +41,8 @@ abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
 
   @required
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   });
 }

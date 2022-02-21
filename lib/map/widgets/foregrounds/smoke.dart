@@ -4,47 +4,42 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Smoke extends AnimatedForegroundWidget {
-
-
   const Smoke({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.smoke(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
             loopDuration: Duration(seconds: 3),
           ),
-          size: const Size(100, 100),
+          size: const Size(140, 100),
           curve: Curves.decelerate,
           userControlStream: userControlStream,
-          isDone: isDone,
-          key: key,
-          x: 120,
-          y: -100,
+          status: status,
+          x: 0,
+          y: -240,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Smoke(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
   State<StatefulWidget> createState() => _SmokeState();
 }
 
-class _SmokeState extends State<Smoke> with TickerProviderStateMixin {
+class _SmokeState extends State<Smoke> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final List<SmokeCloud> _smokeClouds = <SmokeCloud>[];
   bool _isComplete = false;
@@ -70,7 +65,7 @@ class _SmokeState extends State<Smoke> with TickerProviderStateMixin {
               );
             }
             if (_smokeClouds[i].radius > widget.size.width / 4 &&
-                !widget.isDone) {
+                !widget.status.isDone) {
               _smokeClouds.removeAt(i);
             }
           }
@@ -86,7 +81,7 @@ class _SmokeState extends State<Smoke> with TickerProviderStateMixin {
         }
       })
       ..forward();
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.userControlStream?.listen(_userControlListener);

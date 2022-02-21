@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
@@ -59,9 +60,12 @@ class _AppState extends State<App> {
     _platformHelper = widget._platformHelperFactory();
 
     _timer = Timer(const Duration(milliseconds: 20), () {
-      for (var i = 1; i <= 15; i++) {
-        precacheImage(
-          Image.asset('assets/images/dashatar/green/$i.png').image,
+      for (var i = 1; i <= 17; i++) {
+        precachePicture(
+          ExactAssetPicture(
+            SvgPicture.svgStringDecoderBuilder,
+            'assets/vectors/$i.svg',
+          ),
           context,
         );
       }

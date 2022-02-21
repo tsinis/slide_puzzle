@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
+import '../../models/animated_widget_key.dart';
 import '../../models/user_control.dart';
 
 class Wheel extends AnimatedForegroundWidget {
   const Wheel({
+    AnimatedWidgetKey status = const AnimatedWidgetKey.wheel(),
     Stream<UserControl>? userControlStream,
-    bool isDone = false,
-    Key? key,
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
@@ -23,23 +23,20 @@ class Wheel extends AnimatedForegroundWidget {
           ),
           userControlStream: userControlStream,
           curve: Curves.decelerate,
-          isDone: isDone,
-          key: key,
+          status: status,
           x: 80,
           y: 60,
         );
 
   @override
   AnimatedForegroundWidget copyWith({
+    bool isDone = false,
     Stream<UserControl>? userControlStream,
     AnimatedForegroundSpecs? specification,
-    bool? isDone,
-    Key? key,
   }) =>
       Wheel(
         userControlStream: userControlStream ?? this.userControlStream,
-        isDone: isDone ?? this.isDone,
-        key: key ?? this.key,
+        status: status.copyWith(isDone: isDone),
       );
 
   @override
@@ -53,7 +50,7 @@ class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    final loopValue = (widget.isDone) ? 0.0 : 0.5;
+    final loopValue = (widget.status.isDone) ? 0.0 : 0.5;
     _controller = AnimationController(
       duration: widget.duration,
       lowerBound: loopValue,
@@ -63,7 +60,7 @@ class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
       parent: _controller,
       curve: widget.curve,
     );
-    if (widget.isDone) {
+    if (widget.status.isDone) {
       _controller.repeat(reverse: true);
     }
     widget.listenUserControls(_controller);
