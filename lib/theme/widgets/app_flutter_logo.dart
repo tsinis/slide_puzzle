@@ -18,29 +18,30 @@ class AppFlutterLogo extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final assetName = isColored
-        ? 'assets/images/logo_flutter_color.png'
-        : 'assets/images/logo_flutter_white.png';
+  Widget build(BuildContext context) => ShaderMask(
+        blendMode: isColored ? BlendMode.overlay : BlendMode.srcIn,
+        shaderCallback: (bounds) {
+          final color = isColored ? Colors.transparent : Colors.white;
 
-    return AnimatedSwitcher(
-      duration: PuzzleThemeAnimationDuration.logoChange,
-      child: height != null
-          ? Image.asset(
-              assetName,
-              height: height,
-            )
-          : ResponsiveLayoutBuilder(
-              key: Key(assetName),
-              small: (_, __) => Image.asset(
-                assetName,
-                height: 24,
-              ),
-              medium: (_, __) => Image.asset(
-                assetName,
-                height: 29,
-              ),
-            ),
-    );
-  }
+          return LinearGradient(colors: [color, color]).createShader(bounds);
+        },
+        child: AnimatedSwitcher(
+          duration: PuzzleThemeAnimationDuration.logoChange,
+          child: height != null
+              ? FlutterLogo(
+                  style: FlutterLogoStyle.horizontal,
+                  size: height! * 3.6,
+                )
+              : ResponsiveLayoutBuilder(
+                  small: (_, __) => const FlutterLogo(
+                    style: FlutterLogoStyle.horizontal,
+                    size: 48,
+                  ),
+                  medium: (_, __) => const FlutterLogo(
+                    style: FlutterLogoStyle.horizontal,
+                    size: 60,
+                  ),
+                ),
+        ),
+      );
 }

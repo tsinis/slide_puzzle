@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Balloon extends AnimatedForegroundWidget {
-  const Balloon({
+  const Balloon({ 
     AnimatedWidgetKey status = const AnimatedWidgetKey.balloon(),
     Stream<UserControl>? userControlStream,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.orange,
-            secondColor: Colors.yellow,
-            thirdColor: Colors.brown,
-            fourthColor: Colors.black,
+            firstColor: IllustrationColors.orange,
+            secondColor: IllustrationColors.lightYellow,
+            thirdColor: IllustrationColors.brown,
+            fourthColor: IllustrationColors.midGrey,
             loopDuration: Duration(milliseconds: 3500),
           ),
           curve: Curves.easeInOutCubicEmphasized,

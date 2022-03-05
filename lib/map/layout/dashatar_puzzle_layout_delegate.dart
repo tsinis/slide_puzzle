@@ -5,6 +5,7 @@ import '../../layout/layout.dart';
 import '../../models/models.dart';
 import '../../puzzle/puzzle.dart';
 import '../dashatar.dart';
+import '../models/illustration_colors.dart';
 
 /// {@template dashatar_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI
@@ -38,7 +39,8 @@ class DashatarPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
       );
 
   @override
-  Widget backgroundBuilder(PuzzleState state) => const SizedBox();
+  Widget backgroundBuilder(PuzzleState state) =>
+      const ColoredBox(color: IllustrationColors.seaColor);
 
   @override
   Widget boardBuilder(int size, List<Widget> tiles) => Stack(

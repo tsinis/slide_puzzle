@@ -124,10 +124,6 @@ void main() {
       when(() => theme.menuInactiveColor).thenReturn(Colors.black);
       when(() => theme.hasTimer).thenReturn(true);
       when(() => theme.name).thenReturn('Name');
-      when(() => theme.audioControlOnAsset)
-          .thenReturn('assets/images/audio_control/simple_on.png');
-      when(() => theme.audioControlOffAsset)
-          .thenReturn('assets/images/audio_control/simple_off.png');
 
       dashatarThemeBloc = MockDashatarThemeBloc();
       when(() => dashatarThemeBloc.state)

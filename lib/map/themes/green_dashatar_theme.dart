@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import '../../colors/colors.dart';
 import '../../l10n/l10n.dart';
 import '../dashatar.dart';
+import '../models/illustration_colors.dart';
 
 /// {@template green_dashatar_theme}
 /// The green dashatar puzzle theme.
 /// {@endtemplate}
 class GreenDashatarTheme extends DashatarTheme {
   @override
-  Color get backgroundColor => PuzzleColors.greenPrimary;
+  Color get backgroundColor => IllustrationColors.seaColor;
 
   @override
-  Color get defaultColor => PuzzleColors.green90;
+  Color get defaultColor => IllustrationColors.lightYellow;
 
   @override
-  Color get buttonColor => PuzzleColors.green50;
+  Color get buttonColor => IllustrationColors.darkBlueCastle;
 
   @override
   Color get menuInactiveColor => PuzzleColors.green50;
@@ -24,14 +25,7 @@ class GreenDashatarTheme extends DashatarTheme {
   Color get countdownColor => PuzzleColors.green50;
 
   @override
-  String get themeAsset => 'assets/images/dashatar/gallery/green.png';
-
-  @override
-  String get successThemeAsset => 'assets/images/dashatar/success/green.png';
-
-  @override
-  String get audioControlOffAsset =>
-      'assets/images/audio_control/green_dashatar_off.png';
+  String get successThemeAsset => 'assets/vectors/prize.svg';
 
   @override
   String get audioAsset => 'assets/audio/skateboard.mp3';

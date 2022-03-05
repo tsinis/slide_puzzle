@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -24,10 +25,10 @@ class DashatarTwitterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DashatarShareButton(
         title: 'Twitter',
-        icon: Image.asset(
-          'assets/images/twitter_icon.png',
-          width: 13.13,
-          height: 10.67,
+        icon: const FaIcon(
+          FontAwesomeIcons.twitter,
+          color: Colors.white,
+          size: 16,
         ),
         color: const Color(0xFF13B9FD),
         onPressed: () => openLink(_twitterShareUrl(context)),
@@ -54,10 +55,10 @@ class DashatarFacebookButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DashatarShareButton(
         title: 'Facebook',
-        icon: Image.asset(
-          'assets/images/facebook_icon.png',
-          width: 6.56,
-          height: 13.13,
+        icon: const FaIcon(
+          FontAwesomeIcons.facebookF,
+          color: Colors.white,
+          size: 16,
         ),
         color: const Color(0xFF0468D7),
         onPressed: () => openLink(_facebookShareUrl(context)),

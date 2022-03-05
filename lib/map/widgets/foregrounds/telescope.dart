@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Telescope extends AnimatedForegroundWidget {
@@ -13,10 +14,10 @@ class Telescope extends AnimatedForegroundWidget {
     Stream<UserControl>? userControlStream,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.grey,
-            secondColor: Colors.white,
-            thirdColor: Color(0xFF5F5F5F),
-            fourthColor: Color(0xFF777777),
+            firstColor: IllustrationColors.midGrey,
+            secondColor: IllustrationColors.lightYellow,
+            thirdColor: IllustrationColors.darkestGrey,
+            fourthColor: IllustrationColors.darkGrey,
             loopDuration: Duration(milliseconds: 2500),
           ),
           curve: Curves.decelerate,

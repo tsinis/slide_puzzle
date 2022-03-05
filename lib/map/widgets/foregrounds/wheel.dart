@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Wheel extends AnimatedForegroundWidget {
@@ -16,9 +17,9 @@ class Wheel extends AnimatedForegroundWidget {
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
-            secondColor: Colors.amber,
+            secondColor: IllustrationColors.lightYellow,
             thirdColor: Colors.white,
-            fourthColor: Colors.green,
+            fourthColor: IllustrationColors.orange,
             loopDuration: Duration(milliseconds: 4500),
           ),
           userControlStream: userControlStream,

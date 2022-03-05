@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../colors/colors.dart';
 import '../../l10n/l10n.dart';
@@ -53,8 +54,8 @@ class DashatarScore extends StatelessWidget {
             : PuzzleTextStyle.headline4;
 
         final timerIconSize = currentSize == ResponsiveLayoutSize.small
-            ? const Size(21, 21)
-            : const Size(28, 28);
+            ? const Size(18, 18)
+            : const Size(22, 22);
 
         final timerIconPadding =
             currentSize == ResponsiveLayoutSize.small ? 4.0 : 6.0;
@@ -75,9 +76,12 @@ class DashatarScore extends StatelessWidget {
                 Positioned(
                   left: imageOffset.dx,
                   top: imageOffset.dy,
-                  child: Image.asset(
-                    theme.successThemeAsset,
-                    height: imageHeight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 40, right: 120),
+                    child: SvgPicture.asset(
+                      theme.successThemeAsset,
+                      height: imageHeight,
+                    ),
                   ),
                 ),
                 Padding(
@@ -89,7 +93,6 @@ class DashatarScore extends StatelessWidget {
                         height: 18,
                         isColored: false,
                       ),
-                      const ResponsiveGap(small: 24, medium: 32),
                       SizedBox(
                         key: const Key('dashatar_score_completed'),
                         width: completedTextWidth,

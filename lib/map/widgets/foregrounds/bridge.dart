@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 import 'pivot_transition.dart';
 
@@ -12,7 +13,7 @@ class Bridge extends AnimatedForegroundWidget {
     Stream<UserControl>? userControlStream,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.amber,
+            firstColor: IllustrationColors.lightYellow,
             loopDuration: Duration(milliseconds: 2500),
           ),
           curve: Curves.easeInSine,

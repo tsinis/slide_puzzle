@@ -7,6 +7,7 @@ import '../../puzzle/bloc/puzzle_bloc.dart';
 import '../models/animated_background_widget.dart';
 import '../models/animated_foreground_widget.dart';
 import '../models/animated_widget_key.dart';
+import '../models/illustration_colors.dart';
 import '../models/user_control.dart';
 import 'foregrounds/constants.dart';
 
@@ -72,7 +73,7 @@ class _AnimatedTileState extends State<AnimatedTile>
         aspectRatio: 1,
         child: FittedBox(
           child: ColoredBox(
-            color: seaColor, //TODO: Remove.
+            color: IllustrationColors.seaColor, //TODO: Remove.
             child: SizedBox.fromSize(
               size: widget.size,
               child: Stack(

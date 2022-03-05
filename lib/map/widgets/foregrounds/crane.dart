@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Crane extends AnimatedForegroundWidget {
@@ -11,9 +12,9 @@ class Crane extends AnimatedForegroundWidget {
     Stream<UserControl>? userControlStream,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.grey,
+            firstColor: IllustrationColors.lightRed,
             secondColor: Colors.black,
-            thirdColor: Color(0xFF5F5F5F),
+            thirdColor: IllustrationColors.lightGrey,
             loopDuration: Duration(milliseconds: 2500),
           ),
           curve: Curves.decelerate,

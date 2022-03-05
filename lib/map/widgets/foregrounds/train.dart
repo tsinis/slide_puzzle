@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Train extends AnimatedForegroundWidget {
@@ -13,9 +14,9 @@ class Train extends AnimatedForegroundWidget {
     Stream<UserControl>? userControlStream,
   }) : super(
           specification: const AnimatedForegroundSpecs(
-            firstColor: Colors.grey,
-            secondColor: Color(0xFF777777),
-            thirdColor: Color(0xFF5F5F5F),
+            firstColor: IllustrationColors.lightRed,
+            secondColor: IllustrationColors.lightYellow,
+            thirdColor: IllustrationColors.darkRed,
             loopDuration: Duration(milliseconds: 1500),
           ),
           size: const Size(250, 88),

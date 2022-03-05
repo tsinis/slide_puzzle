@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../../colors/colors.dart';
@@ -50,10 +51,8 @@ class DashatarTimer extends StatelessWidget {
                 ? PuzzleTextStyle.headline4
                 : PuzzleTextStyle.headline3);
 
-        final currentIconSize = iconSize ??
-            (currentSize == ResponsiveLayoutSize.small
-                ? const Size(28, 28)
-                : const Size(32, 32));
+        final currentIconSize = iconSize?.width ??
+            (currentSize == ResponsiveLayoutSize.small ? 18.0 : 22.0);
 
         final timeElapsed = Duration(seconds: secondsElapsed);
 
@@ -73,11 +72,11 @@ class DashatarTimer extends StatelessWidget {
               ),
             ),
             Gap(iconPadding ?? 8),
-            Image.asset(
-              'assets/images/timer_icon.png',
+            FaIcon(
+              FontAwesomeIcons.clock,
               key: const Key('dashatar_timer_icon'),
-              width: currentIconSize.width,
-              height: currentIconSize.height,
+              color: Colors.white,
+              size: currentIconSize,
             ),
           ],
         );

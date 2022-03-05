@@ -26,8 +26,9 @@ class _AnimatedBackgroundWidgetState extends State<AnimatedBackgroundWidget>
     super.initState();
     _controller = AnimationController(
       duration: widget.moveDuration,
+      upperBound: 0.8,
       vsync: this,
-    )..value = 1;
+    )..value = 0.8;
     _animation = CurvedAnimation(
       parent: _controller,
       curve: widget.curve,

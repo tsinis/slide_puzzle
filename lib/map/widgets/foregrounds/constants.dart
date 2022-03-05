@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
 
 import '../../models/animated_foreground_widget.dart';
 import 'balloon.dart';
@@ -37,5 +36,3 @@ const foregrounds = <AnimatedForegroundWidget?>[
   Balloon(),
   null,
 ];
-
-const Color seaColor = Colors.teal;

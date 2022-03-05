@@ -246,16 +246,6 @@ void main() {
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
-
-        expect(
-          find.byWidgetPredicate(
-            (widget) =>
-                widget is Image &&
-                (widget.image as AssetImage).assetName ==
-                    dashatarTheme.dashAssetForTile(tile),
-          ),
-          findsOneWidget,
-        );
       },
     );
 

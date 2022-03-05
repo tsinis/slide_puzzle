@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../audio_control/audio_control.dart';
 import '../../layout/layout.dart';
@@ -98,13 +99,25 @@ class _Puzzle extends StatelessWidget {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
-              child: const FittedBox(
-                child: PuzzleSections(),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: SizedBox.square(
+              dimension: 240,
+              child: SvgPicture.asset('assets/vectors/windstar.svg'),
+            ),
+          ),
+          ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: const FittedBox(
+                  child: PuzzleSections(),
+                ),
               ),
             ),
           ),

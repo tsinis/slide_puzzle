@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class Plane extends AnimatedForegroundWidget {
@@ -14,8 +15,9 @@ class Plane extends AnimatedForegroundWidget {
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Color.fromARGB(255, 61, 61, 61),
-            thirdColor: Color.fromARGB(255, 131, 131, 131),
-            fourthColor: Colors.brown,
+            secondColor: IllustrationColors.lightYellow,
+            thirdColor: IllustrationColors.lightGreen,
+            fourthColor: IllustrationColors.midGrey,
             loopDuration: Duration(milliseconds: 5500),
           ),
           curve: Curves.slowMiddle,

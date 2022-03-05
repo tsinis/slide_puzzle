@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-import 'package:path/path.dart' as p;
 
 import '../../colors/colors.dart';
 import '../../layout/layout.dart';
-import '../../models/models.dart';
 import '../../theme/theme.dart';
 import '../dashatar.dart';
 
@@ -14,10 +11,6 @@ import '../dashatar.dart';
 abstract class DashatarTheme extends PuzzleTheme {
   @override
   String get name => 'Dashatar';
-
-  @override
-  String get audioControlOnAsset =>
-      'assets/images/audio_control/dashatar_on.png';
 
   @override
   bool get hasTimer => true;
@@ -50,10 +43,6 @@ abstract class DashatarTheme extends PuzzleTheme {
   /// The text color of the countdown timer.
   Color get countdownColor;
 
-  /// The path to the image asset of this theme.
-  ///
-  /// This asset is shown in the Dashatar theme picker.
-  String get themeAsset;
 
   /// The path to the success image asset of this theme.
   ///
@@ -81,11 +70,8 @@ abstract class DashatarTheme extends PuzzleTheme {
         menuActiveColor,
         menuUnderlineColor,
         menuInactiveColor,
-        audioControlOnAsset,
-        audioControlOffAsset,
         layoutDelegate,
         countdownColor,
-        themeAsset,
         successThemeAsset,
         audioAsset,
         dashAssetsDirectory,
@@ -96,18 +82,4 @@ abstract class DashatarTheme extends PuzzleTheme {
 
   /// The semantics label of this theme.
   String semanticsLabel(BuildContext context);
-
-  /// The path to the dash asset for the given [tile].
-  ///
-  /// The puzzle consists of 15 Dash tiles which correct board positions
-  /// are as follows:
-  ///
-  ///  1   2   3   4
-  ///  5   6   7   8
-  ///  9  10  11  12
-  /// 13  14  15
-  ///
-  /// The dash asset for the i-th tile may be found in the file i.png.
-  String dashAssetForTile(Tile tile) =>
-      p.join(dashAssetsDirectory, '${tile.value.toString()}.png');
 }

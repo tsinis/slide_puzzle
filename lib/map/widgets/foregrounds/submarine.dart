@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
-import 'constants.dart';
 
 class Submarine extends AnimatedForegroundWidget {
   const Submarine({
@@ -13,8 +13,8 @@ class Submarine extends AnimatedForegroundWidget {
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Colors.grey,
-            secondColor: Colors.black,
-            thirdColor: Color(0xFF5F5F5F),
+            secondColor: IllustrationColors.darkestGrey,
+            thirdColor: IllustrationColors.midGrey,
             loopDuration: Duration(milliseconds: 2000),
           ),
           curve: Curves.easeOutSine,
@@ -97,9 +97,9 @@ class _SubmarineState extends State<Submarine>
                         end: Alignment.bottomCenter,
                         begin: Alignment.topCenter,
                         colors: <Color>[
-                          seaColor.withOpacity(0.5),
-                          seaColor,
-                          seaColor,
+                          IllustrationColors.seaColor.withOpacity(0.5),
+                          IllustrationColors.seaColor,
+                          IllustrationColors.seaColor,
                         ],
                       ),
                     ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/animated_foreground_specs.dart';
 import '../../models/animated_foreground_widget.dart';
 import '../../models/animated_widget_key.dart';
+import '../../models/illustration_colors.dart';
 import '../../models/user_control.dart';
 
 class SkiTow extends AnimatedForegroundWidget {
@@ -14,8 +15,7 @@ class SkiTow extends AnimatedForegroundWidget {
   }) : super(
           specification: const AnimatedForegroundSpecs(
             firstColor: Color.fromARGB(255, 90, 90, 90),
-            secondColor: Colors.red,
-            thirdColor: Color(0xFF5F5F5F),
+            secondColor: IllustrationColors.lightRed,
             loopDuration: Duration(milliseconds: 3500),
           ),
           curve: Curves.slowMiddle,

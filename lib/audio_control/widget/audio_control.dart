@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../layout/layout.dart';
-import '../../map/themes/green_dashatar_theme.dart';
 import '../../theme/theme.dart';
 import '../audio_control.dart';
 
@@ -15,13 +15,11 @@ class AudioControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: avoid_types_on_closure_parameters
-    const theme = GreenDashatarTheme();
     final audioMuted =
         // ignore: avoid_types_on_closure_parameters
         context.select((AudioControlBloc bloc) => bloc.state.muted);
-    final audioAsset =
-        audioMuted ? theme.audioControlOffAsset : theme.audioControlOnAsset;
+    final audioIcon =
+        audioMuted ? FontAwesomeIcons.volumeMute : FontAwesomeIcons.volumeUp;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -29,19 +27,24 @@ class AudioControl extends StatelessWidget {
         onTap: () => context.read<AudioControlBloc>().add(AudioToggled()),
         child: AnimatedSwitcher(
           duration: PuzzleThemeAnimationDuration.backgroundColorChange,
-          child: ResponsiveLayoutBuilder(
-            key: Key(audioAsset),
-            small: (_, __) => Image.asset(
-              audioAsset,
-              key: const Key('audio_control_small'),
-              width: 24,
-              height: 24,
-            ),
-            medium: (_, __) => Image.asset(
-              audioAsset,
-              key: const Key('audio_control_medium'),
-              width: 33,
-              height: 33,
+          child: SizedBox.square(
+            dimension: 40,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: ResponsiveLayoutBuilder(
+                small: (_, __) => FaIcon(
+                  audioIcon,
+                  key: const Key('audio_control_small'),
+                  color: Colors.white,
+                  size: 24,
+                ),
+                medium: (_, __) => FaIcon(
+                  audioIcon,
+                  key: const Key('audio_control_medium'),
+                  color: Colors.white,
+                  size: 33,
+                ),
+              ),
             ),
           ),
         ),
