@@ -29,11 +29,14 @@ abstract class AnimatedForegroundWidget extends AnimatedStatefulWidget {
     userControlStream?.listen(
       (userEvent) => userEvent.maybeWhen(
         orElse: () {
-          if (animationController.status == AnimationStatus.completed) {
-            animationController.reverse();
-          } else {
-            animationController.forward();
-          }
+          try {
+            if (animationController.status == AnimationStatus.completed) {
+              animationController.reverse();
+            } else {
+              animationController.forward();
+            }
+            // ignore: avoid_catches_without_on_clauses
+          } catch (_) {}
         },
       ),
     );

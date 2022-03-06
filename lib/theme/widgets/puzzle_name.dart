@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../layout/layout.dart';
-import '../../map/themes/green_dashatar_theme.dart';
+import '../../map/themes/green_island_map_theme.dart';
 import '../../typography/typography.dart';
 import '../theme.dart';
 
@@ -18,7 +18,7 @@ class PuzzleName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final nameColor = color ?? theme.nameColor;
 
     return ResponsiveLayoutBuilder(

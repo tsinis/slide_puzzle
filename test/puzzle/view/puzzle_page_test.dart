@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
 import 'package:map_slide_puzzle/layout/layout.dart';
-import 'package:map_slide_puzzle/map/dashatar.dart';
+import 'package:map_slide_puzzle/map/island_map.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:map_slide_puzzle/theme/theme.dart';
 import 'package:map_slide_puzzle/timer/timer.dart';
@@ -22,23 +22,23 @@ void main() {
       expect(find.byType(PuzzleView), findsOneWidget);
     });
 
-    testWidgets('provides all Dashatar themes to PuzzleView', (tester) async {
+    testWidgets('provides all IslandMap themes to PuzzleView', (tester) async {
       await tester.pumpApp(PuzzlePage());
 
       final BuildContext puzzleViewContext =
           tester.element(find.byType(PuzzleView));
 
-      final dashatarThemes =
-          puzzleViewContext.read<DashatarThemeBloc>().state.themes;
+      final islandMapThemes =
+          puzzleViewContext.read<IslandMapThemeBloc>().state.themes;
 
       expect(
-        dashatarThemes,
-        equals([GreenDashatarTheme()]),
+        islandMapThemes,
+        equals([GreenIslandMapTheme()]),
       );
     });
 
     testWidgets(
-      'provides DashatarPuzzleBloc '
+      'provides IslandMapPuzzleBloc '
       'with secondsToBegin equal to 3',
       (tester) async {
         await tester.pumpApp(PuzzlePage());
@@ -47,7 +47,7 @@ void main() {
             tester.element(find.byType(PuzzleView));
 
         final secondsToBegin =
-            puzzleViewContext.read<DashatarPuzzleBloc>().state.secondsToBegin;
+            puzzleViewContext.read<IslandMapPuzzleBloc>().state.secondsToBegin;
 
         expect(
           secondsToBegin,
@@ -91,7 +91,7 @@ void main() {
 
   group('PuzzleView', () {
     late PuzzleTheme theme;
-    late DashatarThemeBloc dashatarThemeBloc;
+    late IslandMapThemeBloc islandMapThemeBloc;
     late PuzzleLayoutDelegate layoutDelegate;
     late AudioControlBloc audioControlBloc;
 
@@ -125,9 +125,9 @@ void main() {
       when(() => theme.hasTimer).thenReturn(true);
       when(() => theme.name).thenReturn('Name');
 
-      dashatarThemeBloc = MockDashatarThemeBloc();
-      when(() => dashatarThemeBloc.state)
-          .thenReturn(DashatarThemeState(themes: [GreenDashatarTheme()]));
+      islandMapThemeBloc = MockIslandMapThemeBloc();
+      when(() => islandMapThemeBloc.state)
+          .thenReturn(IslandMapThemeState(themes: [GreenIslandMapTheme()]));
 
       audioControlBloc = MockAudioControlBloc();
       when(() => audioControlBloc.state).thenReturn(AudioControlState());
@@ -147,7 +147,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -173,7 +173,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -189,7 +189,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -200,7 +200,7 @@ void main() {
     testWidgets('renders puzzle sections', (tester) async {
       await tester.pumpApp(
         PuzzleView(),
-        dashatarThemeBloc: dashatarThemeBloc,
+        islandMapThemeBloc: islandMapThemeBloc,
         audioControlBloc: audioControlBloc,
       );
 
@@ -213,7 +213,7 @@ void main() {
       (tester) async {
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -227,7 +227,7 @@ void main() {
       (tester) async {
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -250,7 +250,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -273,7 +273,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -299,7 +299,7 @@ void main() {
 
         await tester.pumpApp(
           PuzzleView(),
-          dashatarThemeBloc: dashatarThemeBloc,
+          islandMapThemeBloc: islandMapThemeBloc,
           audioControlBloc: audioControlBloc,
         );
 
@@ -452,7 +452,7 @@ void main() {
 
           await tester.pumpApp(
             PuzzleBoard(),
-            dashatarThemeBloc: dashatarThemeBloc,
+            islandMapThemeBloc: islandMapThemeBloc,
             audioControlBloc: audioControlBloc,
             timerBloc: timerBloc,
             puzzleBloc: puzzleBloc,

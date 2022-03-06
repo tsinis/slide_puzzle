@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
-
 import '../../models/animated_foreground_widget.dart';
 import 'balloon.dart';
 import 'bridge.dart';
@@ -7,7 +5,6 @@ import 'crane.dart';
 import 'gate.dart';
 import 'lighthouse.dart';
 import 'plane.dart';
-import 'rainbow.dart';
 import 'ski_tow.dart';
 import 'smoke.dart';
 import 'submarine.dart';
@@ -30,7 +27,7 @@ const foregrounds = <AnimatedForegroundWidget?>[
   Submarine(),
   Bridge(),
   Train(),
-  if (kIsWeb) WebRainbow() else Rainbow(),
+  WebRainbow(),
   Whale(),
   Lighthouse(),
   Balloon(),

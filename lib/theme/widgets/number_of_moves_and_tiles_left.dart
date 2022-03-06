@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/l10n.dart';
 import '../../layout/layout.dart';
-import '../../map/themes/green_dashatar_theme.dart';
+import '../../map/themes/green_island_map_theme.dart';
 import '../../typography/typography.dart';
 import '../theme.dart';
 
@@ -31,7 +31,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final l10n = context.l10n;
     final textColor = color ?? theme.defaultColor;
 

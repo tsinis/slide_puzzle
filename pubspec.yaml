@@ -7,8 +7,8 @@ maintainer: Roman Cinis
 publish_to: none
 
 environment:
-  sdk: ">=2.15.0"
-  flutter: ">=2.8.1"
+  sdk: ">=2.16.1"
+  flutter: ">=2.10.3"
 
 dependencies:
   bloc: ^8.0.3
@@ -27,10 +27,15 @@ dependencies:
   universal_platform: ^1.0.0+1
   url_launcher: ^6.0.20
   websafe_svg: ^2.1.1
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/window_size
+      ref: 5c51870ced62a00e809ba4b81a846a052d241c9f
 
 dev_dependencies:
   bloc_test: ^9.0.3
-  dart_code_metrics: ^4.11.0-dev.1
+  dart_code_metrics: ^4.11.0
   fake_async: ^1.2.0
   flutter_lints: ^1.0.4
   flutter_test:
@@ -42,9 +47,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/audio/
-    - assets/images/
-    - assets/images/audio_control/
-    - assets/images/dashatar/success/
     - assets/vectors/
   fonts:
     - family: GoogleSans

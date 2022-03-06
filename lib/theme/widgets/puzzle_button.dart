@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../colors/colors.dart';
-import '../../map/themes/green_dashatar_theme.dart';
+import '../../map/themes/green_island_map_theme.dart';
 import '../../typography/typography.dart';
 import '../theme.dart';
 
@@ -34,7 +34,7 @@ class PuzzleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final buttonTextColor = textColor ?? PuzzleColors.white;
     final buttonBackgroundColor = backgroundColor ?? theme.buttonColor;
 

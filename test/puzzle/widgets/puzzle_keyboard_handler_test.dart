@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
-import 'package:map_slide_puzzle/map/dashatar.dart';
+import 'package:map_slide_puzzle/map/island_map.dart';
 import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:mocktail/mocktail.dart';
@@ -15,7 +15,7 @@ import '../../helpers/helpers.dart';
 
 void main() {
   group('PuzzleKeyboardHandler', () {
-    late DashatarPuzzleBloc dashatarPuzzleBloc;
+    late IslandMapPuzzleBloc islandMapPuzzleBloc;
     late PuzzleBloc puzzleBloc;
     late Puzzle puzzle;
     late AudioPlayer audioPlayer;
@@ -28,9 +28,9 @@ void main() {
     );
 
     setUp(() {
-      dashatarPuzzleBloc = MockDashatarPuzzleBloc();
-      when(() => dashatarPuzzleBloc.state).thenReturn(
-        DashatarPuzzleState(secondsToBegin: 3),
+      islandMapPuzzleBloc = MockIslandMapPuzzleBloc();
+      when(() => islandMapPuzzleBloc.state).thenReturn(
+        IslandMapPuzzleState(secondsToBegin: 3),
       );
 
       puzzleBloc = MockPuzzleBloc();
@@ -65,7 +65,7 @@ void main() {
             child: SizedBox(),
             audioPlayer: () => audioPlayer,
           ),
-          dashatarPuzzleBloc: dashatarPuzzleBloc,
+          islandMapPuzzleBloc: islandMapPuzzleBloc,
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
@@ -100,7 +100,7 @@ void main() {
             child: SizedBox(),
             audioPlayer: () => audioPlayer,
           ),
-          dashatarPuzzleBloc: dashatarPuzzleBloc,
+          islandMapPuzzleBloc: islandMapPuzzleBloc,
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
@@ -135,7 +135,7 @@ void main() {
             child: SizedBox(),
             audioPlayer: () => audioPlayer,
           ),
-          dashatarPuzzleBloc: dashatarPuzzleBloc,
+          islandMapPuzzleBloc: islandMapPuzzleBloc,
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
@@ -170,7 +170,7 @@ void main() {
             child: SizedBox(),
             audioPlayer: () => audioPlayer,
           ),
-          dashatarPuzzleBloc: dashatarPuzzleBloc,
+          islandMapPuzzleBloc: islandMapPuzzleBloc,
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
@@ -194,11 +194,11 @@ void main() {
     testWidgets(
       'does not add TileTapped '
       'when arrow is pressed and '
-      'Dashatar puzzle is not started',
+      'IslandMap puzzle is not started',
       (tester) async {
         await tester.pumpApp(
           PuzzleKeyboardHandler(child: SizedBox()),
-          dashatarPuzzleBloc: dashatarPuzzleBloc,
+          islandMapPuzzleBloc: islandMapPuzzleBloc,
           puzzleBloc: puzzleBloc,
           audioControlBloc: audioControlBloc,
         );
@@ -220,7 +220,7 @@ void main() {
         PuzzleKeyboardHandler(
           child: SizedBox(key: key),
         ),
-        dashatarPuzzleBloc: dashatarPuzzleBloc,
+        islandMapPuzzleBloc: islandMapPuzzleBloc,
         puzzleBloc: puzzleBloc,
         audioControlBloc: audioControlBloc,
       );
@@ -233,7 +233,7 @@ void main() {
         PuzzleKeyboardHandler(
           child: SizedBox(),
         ),
-        dashatarPuzzleBloc: dashatarPuzzleBloc,
+        islandMapPuzzleBloc: islandMapPuzzleBloc,
         puzzleBloc: puzzleBloc,
         audioControlBloc: audioControlBloc,
       );

@@ -1,1 +1,1 @@
-export 'dashatar_puzzle_layout_delegate.dart';
+export 'island_map_puzzle_layout_delegate.dart';

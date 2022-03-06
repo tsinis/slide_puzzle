@@ -6,7 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
 import 'package:map_slide_puzzle/helpers/helpers.dart';
 import 'package:map_slide_puzzle/layout/layout.dart';
-import 'package:map_slide_puzzle/map/dashatar.dart';
+import 'package:map_slide_puzzle/map/island_map.dart';
 import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:map_slide_puzzle/theme/theme.dart';
@@ -18,17 +18,17 @@ import 'package:url_launcher_platform_interface/url_launcher_platform_interface.
 // ignore: prefer-match-file-name
 class MockPuzzleTheme extends Mock implements PuzzleTheme {}
 
-class MockDashatarTheme extends Mock implements DashatarTheme {}
+class MockIslandMapTheme extends Mock implements IslandMapTheme {}
 
-class MockDashatarThemeBloc
-    extends MockBloc<DashatarThemeEvent, DashatarThemeState>
-    implements DashatarThemeBloc {}
+class MockIslandMapThemeBloc
+    extends MockBloc<IslandMapThemeEvent, IslandMapThemeState>
+    implements IslandMapThemeBloc {}
 
-class MockDashatarPuzzleBloc
-    extends MockBloc<DashatarPuzzleEvent, DashatarPuzzleState>
-    implements DashatarPuzzleBloc {}
+class MockIslandMapPuzzleBloc
+    extends MockBloc<IslandMapPuzzleEvent, IslandMapPuzzleState>
+    implements IslandMapPuzzleBloc {}
 
-class MockDashatarPuzzleState extends Mock implements DashatarPuzzleState {}
+class MockIslandMapPuzzleState extends Mock implements IslandMapPuzzleState {}
 
 class MockPuzzleBloc extends MockBloc<PuzzleEvent, PuzzleState>
     implements PuzzleBloc {}

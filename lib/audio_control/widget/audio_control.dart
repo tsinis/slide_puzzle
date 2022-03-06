@@ -28,7 +28,7 @@ class AudioControl extends StatelessWidget {
         child: AnimatedSwitcher(
           duration: PuzzleThemeAnimationDuration.backgroundColorChange,
           child: SizedBox.square(
-            dimension: 40,
+            dimension: 48,
             child: Align(
               alignment: Alignment.centerLeft,
               child: ResponsiveLayoutBuilder(
@@ -36,13 +36,13 @@ class AudioControl extends StatelessWidget {
                   audioIcon,
                   key: const Key('audio_control_small'),
                   color: Colors.white,
-                  size: 24,
+                  size: 36,
                 ),
                 medium: (_, __) => FaIcon(
                   audioIcon,
                   key: const Key('audio_control_medium'),
                   color: Colors.white,
-                  size: 33,
+                  size: 42,
                 ),
               ),
             ),

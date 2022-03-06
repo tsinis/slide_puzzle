@@ -7,7 +7,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../../audio_control/audio_control.dart';
 import '../../helpers/helpers.dart';
-import '../../map/dashatar.dart';
+import '../../map/island_map.dart';
 import '../../models/models.dart';
 import '../puzzle.dart';
 
@@ -75,8 +75,8 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
   void _handleKeyEvent(RawKeyEvent event) {
     // The user may move tiles only when the puzzle is started.
-    final canMoveTiles = !(context.read<DashatarPuzzleBloc>().state.status !=
-        DashatarPuzzleStatus.started);
+    final canMoveTiles = !(context.read<IslandMapPuzzleBloc>().state.status !=
+        IslandMapPuzzleStatus.started);
 
     if (event is RawKeyDownEvent && canMoveTiles) {
       final puzzle = context.read<PuzzleBloc>().state.puzzle;

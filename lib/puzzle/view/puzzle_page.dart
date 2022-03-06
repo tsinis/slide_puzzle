@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../audio_control/audio_control.dart';
 import '../../layout/layout.dart';
-import '../../map/dashatar.dart';
+import '../../map/island_map.dart';
+import '../../map/models/illustration_colors.dart';
 import '../../models/models.dart';
 import '../../theme/theme.dart';
 import '../../timer/timer.dart';
@@ -26,13 +27,13 @@ class PuzzlePage extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => DashatarThemeBloc(
-              themes: const [GreenDashatarTheme()],
-            )..add(const DashatarThemeChanged(themeIndex: 0)),
+            create: (_) => IslandMapThemeBloc(
+              themes: const [GreenIslandMapTheme()],
+            )..add(const IslandMapThemeChanged(themeIndex: 0)),
           ),
           BlocProvider(
             create: (_) =>
-                DashatarPuzzleBloc(secondsToBegin: 3, ticker: const Ticker()),
+                IslandMapPuzzleBloc(secondsToBegin: 3, ticker: const Ticker()),
           ),
           BlocProvider(create: (_) => TimerBloc(ticker: const Ticker())),
           BlocProvider(create: (_) => AudioControlBloc()),
@@ -51,13 +52,13 @@ class PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
 
     return Scaffold(
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
         decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
+        child: BlocListener<IslandMapThemeBloc, IslandMapThemeState>(
           listener: (context, state) {},
           child: MultiBlocProvider(
             providers: [
@@ -80,48 +81,53 @@ class _Puzzle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return LayoutBuilder(
-      builder: (context, constraints) => Stack(
-        alignment: Alignment.center,
-        children: [
-          GridPaper(
-            interval: 1000,
-            divisions: 3,
-            subdivisions: 3,
-            child: UnconstrainedBox(
-              child: SizedBox(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                child: theme.layoutDelegate.backgroundBuilder(state),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: SizedBox.square(
-              dimension: 240,
-              child: SvgPicture.asset('assets/vectors/windstar.svg'),
-            ),
-          ),
-          ScrollConfiguration(
-            behavior:
-                ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: const FittedBox(
-                  child: PuzzleSections(),
+      builder: (context, constraints) => InteractiveViewer(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            GridPaper(
+              interval: 1000,
+              divisions: 3,
+              subdivisions: 3,
+              child: UnconstrainedBox(
+                child: SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: theme.layoutDelegate.backgroundBuilder(state),
                 ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: SizedBox.square(
+                dimension: 200,
+                child: Opacity(
+                  opacity: 0.66,
+                  child: SvgPicture.asset('assets/vectors/windstar.svg'),
+                ),
+              ),
+            ),
+            ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: const FittedBox(
+                    child: PuzzleSections(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -138,7 +144,7 @@ class PuzzleLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
 
     return AppFlutterLogo(
       key: puzzleLogoKey,
@@ -151,26 +157,47 @@ class PuzzleLogo extends StatelessWidget {
 /// Displays start and end sections of the puzzle.
 /// {@endtemplate}
 // ignore: prefer-single-widget-per-file
-class PuzzleSections extends StatelessWidget {
+class PuzzleSections extends StatefulWidget {
   /// {@macro puzzle_sections}
   const PuzzleSections({Key? key}) : super(key: key);
 
   @override
+  State<PuzzleSections> createState() => _PuzzleSectionsState();
+}
+
+class _PuzzleSectionsState extends State<PuzzleSections> {
+  bool _isVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future<void>.delayed(
+      const Duration(seconds: 1),
+      () => setState(() => _isVisible = true),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
-    return Center(
-      child: Column(
-        children: [
-          UnconstrainedBox(
-            child: theme.layoutDelegate.startSectionBuilder(state),
-          ),
-          const ResponsiveGap(small: 8, medium: 16),
-          const PuzzleBoard(),
-          const ResponsiveGap(small: 16, medium: 24),
-          theme.layoutDelegate.endSectionBuilder(state),
-        ],
+    return AnimatedOpacity(
+      opacity: _isVisible ? 1 : 0,
+      curve: Curves.easeIn,
+      duration: const Duration(seconds: 1),
+      child: Center(
+        child: Column(
+          children: [
+            UnconstrainedBox(
+              child: theme.layoutDelegate.startSectionBuilder(state),
+            ),
+            const ResponsiveGap(small: 8, medium: 16),
+            const PuzzleBoard(),
+            const ResponsiveGap(small: 16, medium: 24),
+            theme.layoutDelegate.endSectionBuilder(state),
+          ],
+        ),
       ),
     );
   }
@@ -187,7 +214,7 @@ class PuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final puzzle = context.select((PuzzleBloc bloc) => bloc.state.puzzle);
 
     final size = puzzle.getDimension();
@@ -196,15 +223,16 @@ class PuzzleBoard extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(24),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Colors.white60,
-          border: Border.all(color: Colors.blue, width: 4),
+          color: Colors.white38,
+          border:
+              Border.all(color: IllustrationColors.lightBlueCastle, width: 2),
           borderRadius: const BorderRadius.all(Radius.circular(24)),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(36),
+          padding: const EdgeInsets.all(16),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             child: PuzzleKeyboardHandler(
@@ -244,7 +272,7 @@ class _PuzzleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = GreenDashatarTheme();
+    const theme = GreenIslandMapTheme();
     final state = context.select((PuzzleBloc bloc) => bloc.state);
     final isComplete = state.puzzleStatus == PuzzleStatus.complete;
 
