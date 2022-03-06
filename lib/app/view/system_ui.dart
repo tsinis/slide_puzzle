@@ -16,7 +16,7 @@ class SystemUI {
     double height = 740,
     WindowSizeChannel? sizeChannel,
     double width = 577,
-    double windowsHeightCompensation = 32,
+    double windowsHeightCompensation = 92,
     String windowTitle = 'Island Map Puzzle',
   })  : _height = height,
         _sizeChannel = sizeChannel,

@@ -24,6 +24,10 @@ dependencies:
   google_fonts: 2.2.0
   intl: ^0.17.0
   just_audio: ^0.9.20
+  just_audio_libwinmedia:
+    git:
+      url: https://github.com/bdlukaa/just_audio_libwinmedia
+      ref: e4882cec24cfdfe0931e7794ac7d46ad6b4d1804
   universal_platform: ^1.0.0+1
   url_launcher: ^6.0.20
   websafe_svg: ^2.1.1

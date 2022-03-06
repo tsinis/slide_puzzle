@@ -315,6 +315,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.20"
+  just_audio_libwinmedia:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: e4882cec24cfdfe0931e7794ac7d46ad6b4d1804
+      resolved-ref: e4882cec24cfdfe0931e7794ac7d46ad6b4d1804
+      url: "https://github.com/bdlukaa/just_audio_libwinmedia"
+    source: git
+    version: "0.0.4"
   just_audio_platform_interface:
     dependency: transitive
     description:
@@ -329,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.4"
+  libwinmedia:
+    dependency: transitive
+    description:
+      name: libwinmedia
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   lints:
     dependency: transitive
     description:
