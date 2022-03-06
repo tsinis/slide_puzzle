@@ -75,16 +75,10 @@ class IslandMapPuzzleTileState extends State<IslandMapPuzzleTile>
     final size = widget.state.puzzle.getDimension();
     final status =
         context.select((IslandMapPuzzleBloc bloc) => bloc.state.status);
-    final hasStarted = status == IslandMapPuzzleStatus.started;
-    final puzzleIncomplete =
-        context.select((PuzzleBloc bloc) => bloc.state.puzzleStatus) ==
-            PuzzleStatus.incomplete;
 
     final movementDuration = status == IslandMapPuzzleStatus.loading
         ? const Duration(milliseconds: 800)
         : const Duration(milliseconds: 370);
-
-    final canPress = hasStarted && puzzleIncomplete;
 
     return AudioControlListener(
       audioPlayer: _audioPlayer,
