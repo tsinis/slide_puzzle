@@ -101,7 +101,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
     }
 
-    // currentPositions.shuffle(random); TODO Restore!
+    currentPositions.shuffle(random);
 
     final tiles =
         _getTileListFromPositions(size, correctPositions, currentPositions);
