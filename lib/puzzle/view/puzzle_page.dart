@@ -171,10 +171,7 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
   @override
   void initState() {
     super.initState();
-    Future<void>.delayed(
-      const Duration(seconds: 1),
-      () => setState(() => _isVisible = true),
-    );
+    _startAnimation();
   }
 
   @override
@@ -201,6 +198,14 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
       ),
     );
   }
+
+  void _startAnimation() => Future<void>.delayed(
+        const Duration(milliseconds: 600),
+        () {
+          setState(() => _isVisible = true);
+          context.read<TimerBloc>().add(const TimerStarted());
+        },
+      );
 }
 
 /// {@template puzzle_board}

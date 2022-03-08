@@ -22,7 +22,7 @@ class GreenIslandMapTheme extends IslandMapTheme {
   Color get menuInactiveColor => PuzzleColors.green50;
 
   @override
-  Color get countdownColor => PuzzleColors.green50;
+  Color get countdownColor => Colors.white;
 
   @override
   String get successThemeAsset => 'assets/vectors/prize.svg';

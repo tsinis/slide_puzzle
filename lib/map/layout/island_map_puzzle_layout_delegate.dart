@@ -44,13 +44,10 @@ class IslandMapPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget boardBuilder(int size, List<Widget> tiles) => Stack(
+        alignment: Alignment.center,
         children: [
           IslandMapPuzzleBoard(tiles: tiles),
-          const Positioned(
-            top: 0,
-            right: 0,
-            child: IslandMapCountdown(),
-          ),
+          const IslandMapCountdown(),
         ],
       );
 
