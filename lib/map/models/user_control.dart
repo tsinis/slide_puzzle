@@ -17,19 +17,4 @@ extension ControlEventExtension on UserControl {
 
     return orElse();
   }
-
-  T when<T>({
-    required T Function() onHover,
-    required T Function() onPress,
-    required T Function() onLongPress,
-  }) {
-    switch (this) {
-      case UserControl.hover:
-        return onHover();
-      case UserControl.singlePress:
-        return onPress();
-      case UserControl.longPress:
-        return onLongPress();
-    }
-  }
 }

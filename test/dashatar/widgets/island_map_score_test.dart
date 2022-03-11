@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/map/island_map.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
@@ -85,12 +86,7 @@ void main() {
         );
 
         expect(
-          find.byWidgetPredicate(
-            (widget) =>
-                widget is Image &&
-                (widget.image as AssetImage).assetName ==
-                    theme.successThemeAsset,
-          ),
+          find.byWidgetPredicate((widget) => widget is SvgPicture),
           findsOneWidget,
         );
       },

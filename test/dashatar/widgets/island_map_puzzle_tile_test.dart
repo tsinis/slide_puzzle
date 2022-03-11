@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/audio_control/audio_control.dart';
 import 'package:map_slide_puzzle/map/island_map.dart';
+import 'package:map_slide_puzzle/map/widgets/animated_tile.dart';
 import 'package:map_slide_puzzle/models/models.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
 import 'package:mocktail/mocktail.dart';
@@ -72,7 +72,7 @@ void main() {
 
     testWidgets(
       'adds TileTapped to PuzzleBloc '
-      'and plays the tile_move sound '
+      'and plays the move_tile sound '
       'when tapped and '
       'IslandMapPuzzleStatus is started and '
       'PuzzleStatus is incomplete',
@@ -111,11 +111,11 @@ void main() {
         // Wait for the initialization of the audio player.
         await tester.pump(Duration(seconds: 1));
 
-        await tester.tap(find.byType(IconButton));
+        await tester.tap(find.byType(AnimatedTile));
         await tester.pumpAndSettle();
 
         verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
-        verify(() => audioPlayer.setAsset('assets/audio/tile_move.mp3'))
+        verify(() => audioPlayer.setAsset('assets/audio/move_tile.mp3'))
             .called(1);
         verify(audioPlayer.play).called(1);
       },
@@ -147,7 +147,7 @@ void main() {
           audioControlBloc: audioControlBloc,
         );
 
-        await tester.tap(find.byType(IconButton));
+        await tester.tap(find.byType(AnimatedTile));
         await tester.pumpAndSettle();
 
         verifyNever(() => puzzleBloc.add(TileTapped(tile)));
@@ -179,10 +179,10 @@ void main() {
           audioControlBloc: audioControlBloc,
         );
 
-        await tester.tap(find.byType(IconButton));
+        await tester.tap(find.byType(AnimatedTile));
         await tester.pumpAndSettle();
 
-        verifyNever(() => puzzleBloc.add(TileTapped(tile)));
+        verify(() => puzzleBloc.add(TileTapped(tile)));
       },
     );
 
@@ -231,7 +231,7 @@ void main() {
     });
 
     testWidgets(
-      'renders IconButton '
+      'renders AnimatedTile '
       'with IslandMap icon',
       (tester) async {
         await tester.pumpApp(
@@ -250,7 +250,7 @@ void main() {
     );
 
     testWidgets(
-      'renders disabled IconButton '
+      'renders disabled AnimatedTile '
       'when IslandMapPuzzleStatus is loading',
       (tester) async {
         when(() => islandMapPuzzleState.status)
@@ -271,7 +271,7 @@ void main() {
 
         expect(
           find.byWidgetPredicate(
-            (widget) => widget is IconButton && widget.onPressed == null,
+            (widget) => widget is AnimatedTile,
           ),
           findsOneWidget,
         );
@@ -294,63 +294,5 @@ void main() {
 
       expect(find.byType(AudioControlListener), findsOneWidget);
     });
-
-    testWidgets(
-      'scales IconButton '
-      'when hovered over',
-      (tester) async {
-        when(() => islandMapPuzzleState.status)
-            .thenReturn(IslandMapPuzzleStatus.started);
-
-        await tester.pumpApp(
-          Scaffold(
-            body: Column(
-              children: [
-                IslandMapPuzzleTile(
-                  state: PuzzleState(),
-                  tile: tile,
-                ),
-                const SizedBox(
-                  key: Key('__sized_box__'),
-                  width: 20,
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-          islandMapPuzzleBloc: islandMapPuzzleBloc,
-          islandMapThemeBloc: islandMapThemeBloc,
-          puzzleBloc: puzzleBloc,
-          audioControlBloc: audioControlBloc,
-        );
-
-        final gesture =
-            await tester.createGesture(kind: PointerDeviceKind.mouse);
-        await gesture.addPointer(location: Offset.zero);
-        addTearDown(gesture.removePointer);
-        await gesture.moveTo(tester.getCenter(find.byType(IconButton)));
-        await tester.pumpAndSettle();
-
-        final scaleWithHover = tester
-            .widget<ScaleTransition>(
-              find.byKey(Key('island_map_puzzle_tile_scale_${tile.value}')),
-            )
-            .scale
-            .value;
-
-        await gesture
-            .moveTo(tester.getCenter(find.byKey(Key('__sized_box__'))));
-        await tester.pumpAndSettle();
-
-        final scaleWithoutHover = tester
-            .widget<ScaleTransition>(
-              find.byKey(Key('island_map_puzzle_tile_scale_${tile.value}')),
-            )
-            .scale
-            .value;
-
-        expect(scaleWithHover, lessThan(scaleWithoutHover));
-      },
-    );
   });
 }

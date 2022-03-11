@@ -11,15 +11,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http;
 
 import '../../helpers/helpers.dart';
+import '../../helpers/prefetch_web_to_memory.dart';
 import '../../l10n/l10n.dart';
 import '../../puzzle/puzzle.dart';
 
 /// Main app configuration
 class App extends StatefulWidget {
+  /// The path to local assets folder.
+  static const localAssetsPrefix = 'assets/';
+
+  /// The path to audio assets.
+  static const audioAssets = [
+    'assets/audio/shuffle.mp3',
+    'assets/audio/click.mp3',
+    'assets/audio/success.mp3',
+    'assets/audio/move_tile.mp3',
+  ];
+
   final ValueGetter<PlatformHelper> _platformHelperFactory;
 
   // ignore: public_member_api_docs
@@ -32,19 +42,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  /// The path to local assets folder.
-  static const localAssetsPrefix = 'assets/';
-
-  static final audioAssets = [
-    'assets/audio/shuffle.mp3',
-    'assets/audio/click.mp3',
-    'assets/audio/dumbbell.mp3',
-    'assets/audio/sandwich.mp3',
-    'assets/audio/skateboard.mp3',
-    'assets/audio/success.mp3',
-    'assets/audio/tile_move.mp3',
-  ];
-
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
 
@@ -81,24 +78,11 @@ class _AppState extends State<App> {
       );
 
       if (kIsWeb) {
-        audioAssets.forEach(prefetchToMemory);
+        for (final audio in App.audioAssets) {
+          prefetchWebToMemory(audio, _platformHelper);
+        }
       }
     });
-  }
-
-  /// Prefetches the given [filePath] to memory.
-  Future<void> prefetchToMemory(String filePath) async {
-    if (_platformHelper.isWeb) {
-      // We rely on browser caching here. Once the browser downloads the file,
-      // the native implementation should be able to access it from cache.
-      await http.get(Uri.parse('$localAssetsPrefix$filePath'));
-
-      return;
-    }
-    throw UnimplementedError(
-      'The function `prefetchToMemory` is not implemented '
-      'for platforms other than Web.',
-    );
   }
 
   @override

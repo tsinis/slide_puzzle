@@ -59,7 +59,7 @@ class IslandMapPuzzleTileState extends State<IslandMapPuzzleTile>
     // to avoid dropping frames when the theme is changed.
     _timer = Timer(const Duration(seconds: 1), () {
       _audioPlayer = widget._audioPlayerFactory()
-        ..setAsset('assets/audio/tile_move.mp3');
+        ..setAsset('assets/audio/move_tile.mp3');
     });
   }
 
@@ -75,6 +75,8 @@ class IslandMapPuzzleTileState extends State<IslandMapPuzzleTile>
     final size = widget.state.puzzle.getDimension();
     final status =
         context.select((IslandMapPuzzleBloc bloc) => bloc.state.status);
+
+    final isStarted = status == IslandMapPuzzleStatus.started;
 
     final movementDuration = status == IslandMapPuzzleStatus.loading
         ? const Duration(milliseconds: 800)
@@ -101,10 +103,12 @@ class IslandMapPuzzleTileState extends State<IslandMapPuzzleTile>
             child: child,
           ),
           child: (_) => AnimatedTile(
-            onPressed: () {
-              context.read<PuzzleBloc>().add(TileTapped(widget.tile));
-              unawaited(_audioPlayer?.replay());
-            },
+            onPressed: isStarted
+                ? () {
+                    context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                    unawaited(_audioPlayer?.replay());
+                  }
+                : () {},
             index: ValueKey<int>(widget.tile.value),
           ),
         ),

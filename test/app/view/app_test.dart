@@ -5,8 +5,6 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/app/app.dart';
 import 'package:map_slide_puzzle/puzzle/puzzle.dart';
@@ -29,37 +27,11 @@ void main() {
           ),
         );
 
-        await tester.pump(const Duration(milliseconds: 20));
+        await tester.pump(const Duration(milliseconds: 1020));
 
         expect(find.byType(PuzzlePage), findsOneWidget);
       },
     );
-
-    testWidgets(
-      'throws UnimplementedError '
-      'when the platform is not Web',
-      (tester) async {
-        Object? caughtError;
-        await runZonedGuarded(
-          () async {
-            final platformHelper = MockPlatformHelper();
-            when(() => platformHelper.isWeb).thenReturn(false);
-
-            await tester.pumpWidget(
-              App(
-                platformHelperFactory: () => platformHelper,
-              ),
-            );
-
-            await tester.pump(const Duration(seconds: 1));
-          },
-          (error, stack) {
-            caughtError = error;
-          },
-        );
-
-        expect(caughtError, isUnimplementedError);
-      },
-    );
+    test('audioAssets', () => expect(App.audioAssets.length, 4));
   });
 }

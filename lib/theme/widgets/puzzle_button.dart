@@ -47,7 +47,7 @@ class PuzzleButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           textStyle: PuzzleTextStyle.headline5,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24)),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
           ),
         ).copyWith(
           backgroundColor: MaterialStateProperty.all(buttonBackgroundColor),

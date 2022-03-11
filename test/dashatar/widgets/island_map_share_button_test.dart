@@ -42,7 +42,7 @@ void main() {
         audioControlBloc: audioControlBloc,
       );
 
-      expect(find.byType(TextButton), findsOneWidget);
+      expect(find.byType(IslandMapShareButton), findsOneWidget);
     });
 
     testWidgets('opens a link when tapped', (tester) async {
@@ -74,7 +74,7 @@ void main() {
         audioControlBloc: audioControlBloc,
       );
 
-      expect(find.byType(TextButton), findsOneWidget);
+      expect(find.byType(IslandMapShareButton), findsOneWidget);
     });
 
     testWidgets('opens a link when tapped', (tester) async {

@@ -45,7 +45,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   void initState() {
     super.initState();
     _audioPlayer = widget._audioPlayerFactory()
-      ..setAsset('assets/audio/tile_move.mp3');
+      ..setAsset('assets/audio/move_tile.mp3');
   }
 
   @override

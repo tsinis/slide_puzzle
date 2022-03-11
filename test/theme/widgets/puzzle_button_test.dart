@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:map_slide_puzzle/colors/colors.dart';
+import 'package:map_slide_puzzle/map/models/illustration_colors.dart';
 import 'package:map_slide_puzzle/theme/theme.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -61,7 +62,7 @@ void main() {
 
     group('backgroundColor', () {
       testWidgets('defaults to PuzzleTheme.buttonColor', (tester) async {
-        const themeBackgroundColor = Colors.orange;
+        const themeBackgroundColor = IllustrationColors.darkBlueCastle;
         when(() => theme.buttonColor).thenReturn(themeBackgroundColor);
 
         await tester.pumpApp(

@@ -208,9 +208,6 @@ void main() {
         when(() => islandMapPuzzleState.status)
             .thenReturn(IslandMapPuzzleStatus.loading);
 
-        const defaultColor = Colors.orange;
-        when(() => islandMapTheme.defaultColor).thenReturn(defaultColor);
-
         await tester.pumpApp(
           IslandMapPuzzleActionButton(),
           islandMapPuzzleBloc: islandMapPuzzleBloc,
@@ -218,10 +215,11 @@ void main() {
           audioControlBloc: audioControlBloc,
         );
 
+        await tester.pump(const Duration(seconds: 2));
+
         expect(
           find.byWidgetPredicate(
-            (widget) =>
-                widget is PuzzleButton && widget.textColor == defaultColor,
+            (widget) => widget is PuzzleButton,
           ),
           findsOneWidget,
         );

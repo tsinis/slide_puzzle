@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -30,10 +31,13 @@ class _IslandMapShareDialogState extends State<IslandMapShareDialog>
   late final AnimationController _controller;
   late final AudioPlayer _successAudioPlayer;
   late final AudioPlayer _clickAudioPlayer;
+  late final ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 8));
 
     _successAudioPlayer = widget._audioPlayerFactory()
       ..setAsset('assets/audio/success.mp3');
@@ -46,14 +50,15 @@ class _IslandMapShareDialogState extends State<IslandMapShareDialog>
       vsync: this,
       duration: const Duration(milliseconds: 1100),
     );
-    Future.delayed(
-      const Duration(milliseconds: 140),
-      _controller.forward,
-    );
+    Future.delayed(const Duration(milliseconds: 140), () {
+      _controller.forward();
+      _confettiController.play();
+    });
   }
 
   @override
   void dispose() {
+    _confettiController.dispose();
     _successAudioPlayer.dispose();
     _clickAudioPlayer.dispose();
     _controller.dispose();
@@ -100,7 +105,7 @@ class _IslandMapShareDialogState extends State<IslandMapShareDialog>
                                     child: const IslandMapScore(),
                                   ),
                                 ),
-                                const ResponsiveGap(small: 40, medium: 40),
+                                const ResponsiveGap(small: 32, medium: 32),
                                 IslandMapShareYourScore(
                                   animation: animation,
                                 ),
@@ -109,6 +114,14 @@ class _IslandMapShareDialogState extends State<IslandMapShareDialog>
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: ConfettiWidget(
+                      confettiController: _confettiController,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      shouldLoop: true,
                     ),
                   ),
                   Positioned(

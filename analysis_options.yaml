@@ -60,6 +60,7 @@ dart_code_metrics:
     - avoid-nested-conditional-expressions:
       acceptable-level: 1
     - always-remove-listener
+    - avoid-collection-methods-with-unrelated-types
     - avoid-dynamic
     - avoid-global-state
     - avoid-missing-enum-constant-in-map
@@ -69,6 +70,7 @@ dart_code_metrics:
     - avoid-unrelated-type-assertions
     - avoid-unused-parameters
     - avoid-wrapping-in-padding
+    - ban-name
     - binary-expression-operand-order
     - check-unused-code
     - double-literal-format
@@ -88,6 +90,7 @@ dart_code_metrics:
     - prefer-trailing-comma
     - provide-correct-intl-args
     - refer-correct-identifier-length
+    - tag-name
     - technical-debt
 
 linter:

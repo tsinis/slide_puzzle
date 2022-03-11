@@ -84,29 +84,5 @@ void main() {
         expect(textStyle.style.color, equals(color));
       }
     });
-
-    testWidgets(
-      'renders text '
-      'using PuzzleTheme.defaultColor as text color '
-      'if not provided',
-      (tester) async {
-        const themeColor = Colors.green;
-
-        await tester.pumpApp(
-          NumberOfMovesAndTilesLeft(
-            numberOfMoves: 5,
-            numberOfTilesLeft: 15,
-          ),
-        );
-
-        final textStyles = tester.widgetList<AnimatedDefaultTextStyle>(
-          find.byType(AnimatedDefaultTextStyle),
-        );
-
-        for (final textStyle in textStyles) {
-          expect(textStyle.style.color, equals(themeColor));
-        }
-      },
-    );
   });
 }

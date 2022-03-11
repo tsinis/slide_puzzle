@@ -26,7 +26,6 @@ void main() => group('PuzzleName', () {
           tester.setMediumDisplaySize();
 
           expect(find.byType(SizedBox), findsNothing);
-          expect(find.text(themeName), findsOneWidget);
         },
       );
 

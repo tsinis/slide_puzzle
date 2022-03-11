@@ -14,7 +14,7 @@ void main() {
       await tester.pumpApp(AppFlutterLogo());
 
       expect(
-        find.byType(Image),
+        find.byType(FlutterLogo),
         findsOneWidget,
       );
     });
@@ -25,7 +25,7 @@ void main() {
       await tester.pumpApp(AppFlutterLogo());
 
       expect(
-        find.byType(Image),
+        find.byType(FlutterLogo),
         findsOneWidget,
       );
     });
@@ -42,12 +42,7 @@ void main() {
         );
 
         expect(
-          find.byWidgetPredicate(
-            (widget) =>
-                widget is Image &&
-                (widget.image as AssetImage).assetName ==
-                    'assets/images/logo_flutter_color.png',
-          ),
+          find.byType(FlutterLogo),
           findsOneWidget,
         );
       },
@@ -63,15 +58,33 @@ void main() {
           ),
         );
 
-        // expect( //TODO FlutterLogo with ShaderMask
-        //   find.byWidgetPredicate(
-        //     (widget) =>
-        //         widget is Image &&
-        //         (widget.image as AssetImage).assetName ==
-        //             'assets/images/logo_flutter_white.png',
-        //   ),
-        //   findsOneWidget,
-        // );
+        expect(
+          find.byWidgetPredicate(
+            (widget) =>
+                widget is ShaderMask && widget.blendMode == BlendMode.srcIn,
+          ),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets(
+      'renders white Image '
+      'when isColored is true',
+      (tester) async {
+        await tester.pumpApp(
+          AppFlutterLogo(
+            isColored: true,
+          ),
+        );
+
+        expect(
+          find.byWidgetPredicate(
+            (widget) =>
+                widget is ShaderMask && widget.blendMode == BlendMode.overlay,
+          ),
+          findsOneWidget,
+        );
       },
     );
   });

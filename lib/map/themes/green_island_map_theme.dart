@@ -28,9 +28,6 @@ class GreenIslandMapTheme extends IslandMapTheme {
   String get successThemeAsset => 'assets/vectors/prize.svg';
 
   @override
-  String get audioAsset => 'assets/audio/skateboard.mp3';
-
-  @override
   String get dashAssetsDirectory => '';
 
   /// {@macro green_island_map_theme}

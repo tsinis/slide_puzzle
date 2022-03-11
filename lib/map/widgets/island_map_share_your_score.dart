@@ -58,7 +58,7 @@ class IslandMapShareYourScore extends StatelessWidget {
                         color: PuzzleColors.black,
                       ),
                     ),
-                    const Gap(16),
+                    const Gap(8),
                     SizedBox(
                       width: messageWidth,
                       child: Text(
@@ -74,7 +74,7 @@ class IslandMapShareYourScore extends StatelessWidget {
                 ),
               ),
             ),
-            const ResponsiveGap(small: 40, medium: 40),
+            const ResponsiveGap(small: 32, medium: 32),
             SlideTransition(
               position: animation.socialButtonsOffset,
               child: Opacity(

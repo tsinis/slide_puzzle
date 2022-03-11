@@ -11,6 +11,7 @@ import '../../puzzle/puzzle.dart';
 import '../../theme/theme.dart';
 import '../../timer/timer.dart';
 import '../island_map.dart';
+import '../models/illustration_colors.dart';
 
 /// {@template island_map_puzzle_action_button}
 /// Displays the action button to start or shuffle the puzzle
@@ -30,18 +31,35 @@ class IslandMapPuzzleActionButton extends StatefulWidget {
 }
 
 class _IslandMapPuzzleActionButtonState
-    extends State<IslandMapPuzzleActionButton> {
+    extends State<IslandMapPuzzleActionButton>
+    with SingleTickerProviderStateMixin {
   late final AudioPlayer _audioPlayer;
+
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+    _animation = Tween<double>(begin: 2, end: 12).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOutCubicEmphasized,
+      ),
+    );
+    _controller.repeat(reverse: true);
+
     _audioPlayer = widget._audioPlayerFactory()
       ..setAsset('assets/audio/click.mp3');
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -64,34 +82,57 @@ class _IslandMapPuzzleActionButtonState
 
     return AudioControlListener(
       audioPlayer: _audioPlayer,
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: Tooltip(
-          key: ValueKey(status),
-          message: isStarted ? context.l10n.puzzleRestartTooltip : '',
-          verticalOffset: 40,
-          child: PuzzleButton(
-            onPressed: isLoading
-                ? null
-                : () async {
-                    final hasStarted = status == IslandMapPuzzleStatus.started;
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (_, child) => DecoratedBox(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: isStarted
+                    ? Colors.transparent
+                    : IllustrationColors.lightYellow.withOpacity(0.5),
+                blurRadius: _animation.value,
+                spreadRadius: _animation.value,
+              ),
+            ],
+          ),
+          child: child,
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: Tooltip(
+            key: ValueKey(status),
+            message: isStarted ? context.l10n.puzzleRestartTooltip : '',
+            verticalOffset: 40,
+            child: PuzzleButton(
+              onPressed: isLoading
+                  ? null
+                  : () {
+                      unawaited(
+                        _controller.reverse().whenComplete(_controller.stop),
+                      );
+                      final hasStarted =
+                          status == IslandMapPuzzleStatus.started;
 
-                    // Reset the timer and the countdown.
-                    context.read<TimerBloc>().add(const TimerReset());
-                    context.read<IslandMapPuzzleBloc>().add(
-                          IslandMapCountdownReset(
-                            secondsToBegin: hasStarted ? 5 : 3,
-                          ),
-                        );
+                      // Reset the timer and the countdown.
+                      context.read<TimerBloc>().add(const TimerReset());
+                      context.read<IslandMapPuzzleBloc>().add(
+                            IslandMapCountdownReset(
+                              secondsToBegin: hasStarted ? 5 : 3,
+                            ),
+                          );
 
-                    if (hasStarted) {
-                      context.read<PuzzleBloc>().add(const PuzzleInitialized());
-                    }
+                      if (hasStarted) {
+                        context
+                            .read<PuzzleBloc>()
+                            .add(const PuzzleInitialized());
+                      }
 
-                    unawaited(_audioPlayer.replay());
-                  },
-            textColor: isLoading ? theme.defaultColor : null,
-            child: Text(text),
+                      unawaited(_audioPlayer.replay());
+                    },
+              textColor: isLoading ? theme.defaultColor : null,
+              child: Text(text),
+            ),
           ),
         ),
       ),

@@ -123,7 +123,6 @@ void main() {
           findsOneWidget,
         );
       },
-      skip: true,
     );
 
     testWidgets(
@@ -165,7 +164,6 @@ void main() {
           findsOneWidget,
         );
       },
-      skip: true,
     );
 
     testWidgets(
@@ -187,7 +185,6 @@ void main() {
         expect(find.byType(IslandMapPuzzleActionButton), findsNothing);
         expect(find.byType(IslandMapTimer), findsOneWidget);
       },
-      skip: true,
     );
 
     testWidgets('renders IslandMapTimer on a small display', (tester) async {

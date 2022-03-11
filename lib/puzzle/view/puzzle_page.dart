@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../audio_control/audio_control.dart';
+import '../../helpers/helpers.dart';
 import '../../layout/layout.dart';
 import '../../map/island_map.dart';
 import '../../map/models/illustration_colors.dart';
@@ -86,6 +87,8 @@ class _Puzzle extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) => InteractiveViewer(
+        maxScale: 4,
+        minScale: 1,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -101,17 +104,7 @@ class _Puzzle extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: SizedBox.square(
-                dimension: 200,
-                child: Opacity(
-                  opacity: 0.66,
-                  child: SvgPicture.asset('assets/vectors/windstar.svg'),
-                ),
-              ),
-            ),
+            const WindStar(),
             ScrollConfiguration(
               behavior:
                   ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -127,6 +120,88 @@ class _Puzzle extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: prefer-single-widget-per-file
+class WindStar extends StatelessWidget {
+  static const _url = 'github.com/tsinis/slide_puzzle';
+  Widget get _logo => Hero(
+        tag: 'hero',
+        child: SvgPicture.asset('assets/vectors/windstar.svg'),
+      );
+
+  const WindStar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Positioned(
+      right: 0,
+      bottom: 0,
+      child: AnimatedCrossFade(
+        duration: const Duration(milliseconds: 1600),
+        sizeCurve: Curves.easeInOutCubicEmphasized,
+        crossFadeState: ((size.width / size.height) > 1)
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+        secondChild: const SizedBox.shrink(),
+        firstChild: InkWell(
+          child: SizedBox.square(
+            dimension: 200,
+            child: Opacity(opacity: 0.8, child: _logo),
+          ),
+          onTap: () => showDialog<void>(
+            context: context,
+            builder: (BuildContext context) => Theme(
+              data: ThemeData(
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                    primary: Colors.black, // This is a custom color variable
+                    textStyle: const TextStyle(fontFamily: 'GoogleSans'),
+                  ),
+                ),
+              ),
+              child: AboutDialog(
+                applicationIcon: Container(
+                  margin: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: IllustrationColors.seaColor,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  width: 80,
+                  height: 80,
+                  child: _logo,
+                ),
+                applicationName: 'Map Slide Puzzle',
+                applicationVersion: '1.0.0',
+                applicationLegalese:
+                    'A slide puzzle built for Flutter Challenge.',
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16, bottom: 4),
+                    child: Center(
+                      child: Text(
+                        'Source code and more info:',
+                        style: TextStyle(
+                          color: IllustrationColors.midBlueCastle,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => openLink('https://$_url'),
+                    child: const Text(_url),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -201,10 +276,7 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
 
   void _startAnimation() => Future<void>.delayed(
         const Duration(milliseconds: 600),
-        () {
-          setState(() => _isVisible = true);
-          context.read<TimerBloc>().add(const TimerStarted());
-        },
+        () => setState(() => _isVisible = true),
       );
 }
 

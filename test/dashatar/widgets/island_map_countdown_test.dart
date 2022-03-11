@@ -178,7 +178,7 @@ void main() {
       'renders secondsToBegin '
       'using IslandMapTheme.countdownColor as text color',
       (tester) async {
-        const countdownColor = Colors.green;
+        const countdownColor = Colors.white;
         when(() => islandMapTheme.countdownColor).thenReturn(countdownColor);
 
         await tester.pumpApp(
@@ -191,42 +191,6 @@ void main() {
         final text = tester.widget<Text>(find.text('3'));
 
         expect(text.style?.color, equals(countdownColor));
-      },
-    );
-  });
-
-  group('IslandMapCountdownGo', () {
-    late IslandMapThemeBloc islandMapThemeBloc;
-    late IslandMapTheme islandMapTheme;
-
-    setUp(() {
-      islandMapThemeBloc = MockIslandMapThemeBloc();
-      islandMapTheme = MockIslandMapTheme();
-      final themeState = IslandMapThemeState(
-        themes: [islandMapTheme],
-        theme: islandMapTheme,
-      );
-
-      when(() => islandMapTheme.defaultColor).thenReturn(Colors.black);
-      when(() => islandMapTheme.countdownColor).thenReturn(Colors.black);
-      when(() => islandMapThemeBloc.state).thenReturn(themeState);
-    });
-
-    testWidgets(
-      'renders text '
-      'using IslandMapTheme.defaultColor as text color',
-      (tester) async {
-        const defaultColor = Colors.orange;
-        when(() => islandMapTheme.defaultColor).thenReturn(defaultColor);
-
-        await tester.pumpApp(
-          IslandMapCountdownGo(),
-          islandMapThemeBloc: islandMapThemeBloc,
-        );
-
-        final text = tester.widget<Text>(find.byType(Text));
-
-        expect(text.style?.color, equals(defaultColor));
       },
     );
   });

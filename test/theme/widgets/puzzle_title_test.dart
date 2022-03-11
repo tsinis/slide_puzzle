@@ -52,25 +52,5 @@ void main() {
 
       expect(textStyle.style.color, equals(color));
     });
-
-    testWidgets(
-      'renders text '
-      'using PuzzleTheme.titleColor as text color '
-      'if not provided',
-      (tester) async {
-        const titleColor = Colors.green;
-        when(() => theme.titleColor).thenReturn(titleColor);
-
-        await tester.pumpApp(
-          PuzzleTitle(title: 'Title'),
-        );
-
-        final textStyle = tester.firstWidget<AnimatedDefaultTextStyle>(
-          find.byType(AnimatedDefaultTextStyle),
-        );
-
-        expect(textStyle.style.color, equals(titleColor));
-      },
-    );
   });
 }
