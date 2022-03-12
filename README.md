@@ -2,6 +2,7 @@
 
 ![Preview][preview]
 
+[![Codemagic build status](https://api.codemagic.io/apps/62254e583ce15d170e3b522d/62254e583ce15d170e3b522c/status_badge.svg)](https://codemagic.io/apps/62254e583ce15d170e3b522d/62254e583ce15d170e3b522c/latest_build)
 [![Deploy](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml)
 [![Tests](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml)
 [![codecov](https://codecov.io/gh/tsinis/slide_puzzle/branch/main/graph/badge.svg?token=FQF1LSGA1H)](https://codecov.io/gh/tsinis/slide_puzzle)
