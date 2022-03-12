@@ -21,8 +21,11 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<PuzzleReset>(_onPuzzleReset);
   }
 
-  void _onPuzzleInitialized(PuzzleInitialized _, Emitter<PuzzleState> emit) {
-    final puzzle = _generatePuzzle(_size);
+  void _onPuzzleInitialized(
+    PuzzleInitialized event,
+    Emitter<PuzzleState> emit,
+  ) {
+    final puzzle = _generatePuzzle(_size, isFirstRun: event.isFirstRun);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
@@ -82,7 +85,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   /// Build a randomized, solvable puzzle of the given size.
-  Puzzle _generatePuzzle(int size) {
+  Puzzle _generatePuzzle(int size, {bool isFirstRun = false}) {
     final correctPositions = <Position>[];
     final currentPositions = <Position>[];
     final whitespacePosition = Position(x: size, y: size);
@@ -101,7 +104,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
     }
 
-    currentPositions.shuffle(random);
+    if (!isFirstRun) {
+      currentPositions.shuffle(random);
+    }
 
     final tiles =
         _getTileListFromPositions(size, correctPositions, currentPositions);

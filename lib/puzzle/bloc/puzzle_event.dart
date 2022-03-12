@@ -10,10 +10,11 @@ abstract class PuzzleEvent extends Equatable {
 }
 
 class PuzzleInitialized extends PuzzleEvent {
+  final bool isFirstRun;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isFirstRun];
 
-  const PuzzleInitialized();
+  const PuzzleInitialized({this.isFirstRun = false});
 }
 
 class TileTapped extends PuzzleEvent {

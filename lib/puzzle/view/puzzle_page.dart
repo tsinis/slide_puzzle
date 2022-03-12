@@ -65,7 +65,8 @@ class PuzzleView extends StatelessWidget {
             providers: [
               BlocProvider(create: (_) => TimerBloc(ticker: const Ticker())),
               BlocProvider(
-                create: (_) => PuzzleBloc(4)..add(const PuzzleInitialized()),
+                create: (_) => PuzzleBloc(4)
+                  ..add(const PuzzleInitialized(isFirstRun: true)),
               ),
             ],
             child: const _Puzzle(key: Key('puzzle_view_puzzle')),
