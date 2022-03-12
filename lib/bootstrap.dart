@@ -10,6 +10,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'app/view/system_ui.dart';
 
@@ -34,6 +35,7 @@ class AppBlocObserver extends BlocObserver {
 /// Bootstrap is responsible for any common setup and calls
 /// [runApp] with the widget returned by [builder] in an error zone.
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  setPathUrlStrategy();
   const SystemUI().init();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
