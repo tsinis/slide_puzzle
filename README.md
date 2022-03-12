@@ -1,33 +1,61 @@
-# Slide Puzzle
+# Map Slide Puzzle
 
-![Photo Booth Header][logo]
+![Preview][preview]
 
 [![License: MIT][license_badge]][license_link]
+![Chrome](https://img.shields.io/badge/Chrome-✓-success?logo=google-chrome&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-✓-success?logo=apple)
+![Windows](https://img.shields.io/badge/Windows-✓-success?logo=windows)
+![Linux](https://img.shields.io/badge/Linux-✓-success?logo=ubuntu&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-✓-green?logo=apple)
+![Android](https://img.shields.io/badge/Android-✓-green?logo=android&logoColor=white)
+
+## Table of content
+
+* [Description](#Description)
+* [Getting Started](#Getting-Started)
+  * [Platform Specific Setup](#Platform-Specific-Setup)
+* [Tests](#Tests)
+* [Accessibility](#Accessibility)
+* [Licenses](#Licenses)
+* [Working with Translations](#Working-with-Translations)
+  * [Adding Strings](#Adding-Strings)
+  * [Adding Supported Locales](#Adding-Supported-Locales)
+  * [Adding Translations](#Adding-Translations)
+
+## Description
 
 A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
 
-*Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.*
+*This is a heavily modified version of the sample project provided as a starting point of this challenge (Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.). Modified by [Roman Cinis][roman_cinis_link].*
 
-*Modified by [Roman Cinis][roman_cinis_link].*
+Your **goal is to assemble the map of the island with a treasure**, which will be displayed after the 15 tiles are correctly placed. Each tile contains its unique, handcrafted location and animation. The **whole design is created in vector graphics**, so there are no raster images in the game at all. You can zoom in on the tiles (mouse wheel on desktop and macOS and pinch gesture on mobile). **The game works on all platforms that Flutter offers**.
 
----
+> Flutter and the related logo are trademarks of Google LLC. We are not endorsed by or affiliated with Google LLC.
 
-## Getting Started 🚀
+## Getting Started
 
 To run the project either use the launch configuration in VSCode/Android Studio or use the following command:
 
 ```sh
-$ flutter run -d chrome
+flutter gen-l10n
+flutter run
 ```
 
----
+### Platform Specific Setup
 
-## Running Tests 🧪
-
-To run all unit and widget tests use the following command:
+You should run the the app without any additional steps on all platforms without any problems, however, for audio player in **Linux** builds you will need to install **libwebkit2gtk-4.0-dev** package first (via sudo apt-get install):
 
 ```sh
-$ flutter test --coverage --test-randomize-ordering-seed random
+sudo apt-get install libwebkit2gtk-4.0-dev
+```
+
+## Tests
+
+The code is about 100% covered covered by the unit/widget tests. To run all unit and widget tests use the following command:
+
+```sh
+flutter test --coverage --test-randomize-ordering-seed random
 ```
 
 To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
@@ -40,9 +68,15 @@ $ genhtml coverage/lcov.info -o coverage/
 $ open coverage/index.html
 ```
 
----
+## Accessibility
 
-## Working with Translations 🌐
+The app was originally designed to be accessible by **WCAG 2.1 AA standards at minimum, and AAA in particular**. All **texts have a contrast ratio at least of 4.5, images 3.0, touch target sizes of at least 48dp**. The game was also built to be **controllable via keyboard/input device/remote control/gamepad**.
+
+## Licenses
+
+This project is released under the terms of the [MIT license](./LICENSE). All assets (as sounds, fonts) licensed and are free for personal use. You can find **LICENSE** files in their folders. You can also **press on floating compass logo to show "About" dialog** and check all licenses for packages used in this game.
+
+## Working with Translations
 
 This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
 
@@ -148,4 +182,4 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [license_link]: https://opensource.org/licenses/MIT
 [roman_cinis_link]: https://github.com/tsinis
 [very_good_ventures_link]: https://verygood.ventures/
-[logo]: art/header.png
+[preview]: art/preview.gif

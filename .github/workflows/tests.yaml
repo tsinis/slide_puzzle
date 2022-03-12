@@ -3,9 +3,9 @@ name: Tests
 on:
   push:
     paths:
-      # - "lib/**"
-      # - "test/**"
-      # - "pubspec.yaml"
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
       - ".github/workflows/tests.yaml"
   pull_request:
     paths:
@@ -42,8 +42,7 @@ jobs:
     - name: Check Code Coverage
       uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
 
-    #   TODO: Add later:
-    # - name: Upload Code Coverage
-    #   uses: codecov/codecov-action@v2
-    #   with:
-    #     file: ./coverage/lcov.info
+    - name: Upload Code Coverage
+      uses: codecov/codecov-action@v2
+      with:
+        file: ./coverage/lcov.info
