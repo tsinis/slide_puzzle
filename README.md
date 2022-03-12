@@ -2,8 +2,9 @@
 
 ![Preview][preview]
 
-[![Tests](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml)
 [![Deploy](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml)
+[![Tests](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml)
+[![codecov](https://codecov.io/gh/tsinis/slide_puzzle/branch/main/graph/badge.svg?token=FQF1LSGA1H)](https://codecov.io/gh/tsinis/slide_puzzle)
 [![License: MIT][license_badge]][license_link]
 ![Chrome](https://img.shields.io/badge/Chrome-✓-success?logo=google-chrome&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-✓-success?logo=apple)
