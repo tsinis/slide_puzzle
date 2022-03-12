@@ -2,11 +2,12 @@
 
 ![Preview][preview]
 
+[![License: MIT][license_badge]][license_link]
+[![Releases](https://img.shields.io/github/v/release/tsinis/slide_puzzle)](https://github.com/tsinis/slide_puzzle/releases)
 [![Codemagic build status](https://api.codemagic.io/apps/62254e583ce15d170e3b522d/62254e583ce15d170e3b522c/status_badge.svg)](https://codemagic.io/apps/62254e583ce15d170e3b522d/62254e583ce15d170e3b522c/latest_build)
 [![Deploy](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/deploy.yaml)
 [![Tests](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml/badge.svg)](https://github.com/tsinis/slide_puzzle/actions/workflows/tests.yaml)
 [![codecov](https://codecov.io/gh/tsinis/slide_puzzle/branch/main/graph/badge.svg?token=FQF1LSGA1H)](https://codecov.io/gh/tsinis/slide_puzzle)
-[![License: MIT][license_badge]][license_link]
 ![Chrome](https://img.shields.io/badge/Chrome-✓-success?logo=google-chrome&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-✓-success?logo=apple)
 ![Windows](https://img.shields.io/badge/Windows-✓-success?logo=windows)
@@ -42,6 +43,7 @@ Your **goal is to assemble the map of the island with a treasure**, which will b
 To run the project either use the launch configuration in VSCode/Android Studio or use the following command:
 
 ```sh
+flutter pub get
 flutter gen-l10n
 flutter run
 ```
@@ -51,7 +53,8 @@ flutter run
 You should run the the app without any additional steps on all platforms without any problems, however, for audio player in **Linux** builds you will need to install **libwebkit2gtk-4.0-dev** package first (via sudo apt-get install):
 
 ```sh
-sudo apt-get install libwebkit2gtk-4.0-dev
+sudo apt-get update -y
+sudo apt-get --assume-yes install libwebkit2gtk-4.0-dev
 ```
 
 ## Tests
@@ -182,7 +185,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_badge]: https://img.shields.io/badge/license-MIT-yellow.svg
 [license_link]: https://opensource.org/licenses/MIT
 [roman_cinis_link]: https://github.com/tsinis
 [very_good_ventures_link]: https://verygood.ventures/
