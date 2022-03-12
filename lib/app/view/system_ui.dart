@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // ignore: implementation_imports
 import 'package:window_size/src/window_size_channel.dart';
 
@@ -26,6 +27,7 @@ class SystemUI {
 
   bool init() {
     WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     if (!kIsWeb &&
         (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
       try {

@@ -66,88 +66,93 @@ class _IslandMapShareDialogState extends State<IslandMapShareDialog>
   }
 
   @override
-  Widget build(BuildContext context) => AudioControlListener(
-        key: const Key('island_map_share_dialog_success_audio_player'),
-        audioPlayer: _successAudioPlayer,
+  Widget build(BuildContext context) => SizedBox(
+        height: 700,
         child: AudioControlListener(
-          key: const Key('island_map_share_dialog_click_audio_player'),
-          audioPlayer: _clickAudioPlayer,
-          child: ResponsiveLayoutBuilder(
-            small: (_, child) => child!,
-            medium: (_, child) => child!,
-            child: (currentSize) {
-              final padding = currentSize == ResponsiveLayoutSize.medium
-                  ? const EdgeInsets.fromLTRB(48, 54, 48, 53)
-                  : const EdgeInsets.fromLTRB(20, 99, 20, 76);
+          key: const Key('island_map_share_dialog_success_audio_player'),
+          audioPlayer: _successAudioPlayer,
+          child: AudioControlListener(
+            key: const Key('island_map_share_dialog_click_audio_player'),
+            audioPlayer: _clickAudioPlayer,
+            child: ResponsiveLayoutBuilder(
+              small: (_, child) => child!,
+              medium: (_, child) => child!,
+              child: (currentSize) {
+                final padding = currentSize == ResponsiveLayoutSize.medium
+                    ? const EdgeInsets.fromLTRB(48, 54, 48, 53)
+                    : const EdgeInsets.fromLTRB(20, 99, 20, 76);
 
-              final closeIconOffset = currentSize == ResponsiveLayoutSize.medium
-                  ? const Offset(25, 28)
-                  : const Offset(17, 63);
+                final closeIconOffset =
+                    currentSize == ResponsiveLayoutSize.medium
+                        ? const Offset(25, 28)
+                        : const Offset(17, 63);
 
-              return Stack(
-                key: const Key('island_map_share_dialog'),
-                children: [
-                  SingleChildScrollView(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) => SizedBox(
-                        width: constraints.maxWidth,
-                        child: Padding(
-                          padding: padding,
-                          child: IslandMapShareDialogAnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child, animation) => Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SlideTransition(
-                                  position: animation.scoreOffset,
-                                  child: Opacity(
-                                    opacity: animation.scoreOpacity.value,
-                                    child: const IslandMapScore(),
+                return Stack(
+                  alignment: Alignment.center,
+                  key: const Key('island_map_share_dialog'),
+                  children: [
+                    SingleChildScrollView(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => SizedBox(
+                          width: constraints.maxWidth,
+                          child: Padding(
+                            padding: padding,
+                            child: IslandMapShareDialogAnimatedBuilder(
+                              animation: _controller,
+                              builder: (context, child, animation) => Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SlideTransition(
+                                    position: animation.scoreOffset,
+                                    child: Opacity(
+                                      opacity: animation.scoreOpacity.value,
+                                      child: const IslandMapScore(),
+                                    ),
                                   ),
-                                ),
-                                const ResponsiveGap(small: 32, medium: 32),
-                                IslandMapShareYourScore(
-                                  animation: animation,
-                                ),
-                              ],
+                                  const ResponsiveGap(small: 32, medium: 32),
+                                  IslandMapShareYourScore(
+                                    animation: animation,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: ConfettiWidget(
-                      confettiController: _confettiController,
-                      blastDirectionality: BlastDirectionality.explosive,
-                      shouldLoop: true,
-                    ),
-                  ),
-                  Positioned(
-                    right: closeIconOffset.dx,
-                    top: closeIconOffset.dy,
-                    child: IconButton(
-                      key: const Key('island_map_share_dialog_close_button'),
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      iconSize: 18,
-                      icon: const Icon(
-                        Icons.close,
-                        color: PuzzleColors.black,
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: ConfettiWidget(
+                        confettiController: _confettiController,
+                        blastDirectionality: BlastDirectionality.explosive,
+                        shouldLoop: true,
                       ),
-                      onPressed: () {
-                        unawaited(_clickAudioPlayer.play());
-                        Navigator.of(context).pop();
-                      },
                     ),
-                  ),
-                ],
-              );
-            },
+                    Positioned(
+                      right: closeIconOffset.dx,
+                      top: closeIconOffset.dy,
+                      child: IconButton(
+                        key: const Key('island_map_share_dialog_close_button'),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        iconSize: 18,
+                        icon: const Icon(
+                          Icons.close,
+                          color: PuzzleColors.black,
+                        ),
+                        onPressed: () {
+                          unawaited(_clickAudioPlayer.play());
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       );

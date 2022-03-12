@@ -15,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../helpers/helpers.dart';
 import '../../helpers/prefetch_web_to_memory.dart';
 import '../../l10n/l10n.dart';
+import '../../map/models/illustration_colors.dart';
 import '../../puzzle/puzzle.dart';
 
 /// Main app configuration
@@ -93,10 +94,13 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+          appBarTheme: const AppBarTheme(
+            color: IllustrationColors.seaColor,
+          ),
           colorScheme: ColorScheme.fromSwatch(
-            accentColor: const Color(0xFF13B9FF),
+            accentColor: IllustrationColors.seaColor,
           ),
         ),
         localizationsDelegates: const [

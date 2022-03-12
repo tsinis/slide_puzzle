@@ -71,7 +71,23 @@ class _IslandMapCountdownState extends State<IslandMapCountdown> {
             }
           },
           child: ResponsiveLayoutBuilder(
-            small: (_, __) => const SizedBox(),
+            small: (_, __) =>
+                BlocBuilder<IslandMapPuzzleBloc, IslandMapPuzzleState>(
+              builder: (context, state) {
+                if (!state.isCountdownRunning || state.secondsToBegin > 3) {
+                  return const SizedBox();
+                }
+
+                if (state.secondsToBegin > 0) {
+                  return IslandMapCountdownSecondsToBegin(
+                    key: ValueKey(state.secondsToBegin),
+                    secondsToBegin: state.secondsToBegin,
+                  );
+                } else {
+                  return const IslandMapCountdownGo();
+                }
+              },
+            ),
             medium: (_, __) =>
                 BlocBuilder<IslandMapPuzzleBloc, IslandMapPuzzleState>(
               builder: (context, state) {
@@ -255,7 +271,7 @@ class _IslandMapCountdownGoState extends State<IslandMapCountdownGo>
     const theme = GreenIslandMapTheme();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 101),
+      padding: const EdgeInsets.only(top: 50),
       child: FadeTransition(
         opacity: outOpacity,
         child: FadeTransition(

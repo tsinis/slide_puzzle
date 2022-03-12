@@ -55,7 +55,7 @@ sudo apt-get install libwebkit2gtk-4.0-dev
 
 ## Tests
 
-The code is about 100% covered covered by the unit/widget tests. To run all unit and widget tests use the following command:
+The code is almost 100% covered covered by the unit/widget tests. To run all unit and widget tests use the following command:
 
 ```sh
 flutter test --coverage --test-randomize-ordering-seed random

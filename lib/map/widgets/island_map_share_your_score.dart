@@ -43,12 +43,14 @@ class IslandMapShareYourScore extends StatelessWidget {
 
         return Column(
           key: const Key('island_map_share_your_score'),
+          mainAxisSize: MainAxisSize.min,
           children: [
             SlideTransition(
               position: animation.shareYourScoreOffset,
               child: Opacity(
                 opacity: animation.shareYourScoreOpacity.value,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       l10n.islandMapSuccessShareYourScoreTitle,
