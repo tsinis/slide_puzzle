@@ -1,6 +1,6 @@
 # Map Slide Puzzle
 
-![Preview][preview]
+[![Preview](art/preview.gif)](https://vimeo.com/tsinis/map-slide-puzzle)
 
 [![License: MIT][license_badge]][license_link]
 [![Releases](https://img.shields.io/github/v/release/tsinis/slide_puzzle)](https://github.com/tsinis/slide_puzzle/releases)
@@ -182,11 +182,9 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 }
 ```
 
-[coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
 [license_badge]: https://img.shields.io/badge/license-MIT-yellow.svg
 [license_link]: https://opensource.org/licenses/MIT
 [roman_cinis_link]: https://github.com/tsinis
 [very_good_ventures_link]: https://verygood.ventures/
-[preview]: art/preview.gif
