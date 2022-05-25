@@ -127,6 +127,7 @@ class _WebRainbowPart extends StatelessWidget {
   const _WebRainbowPart({
     required this.color,
     required this.radius,
+    // ignore: unused_element
     this.strokeWidth = 5,
     this.child,
     Key? key,

@@ -98,6 +98,7 @@ class _WindmillPainter extends CustomPainter {
     this.primaryColor = Colors.amber,
     this.secondaryColor = Colors.grey,
     this.thirdColor = Colors.white,
+    // ignore: unused_element
     this.widgetSize = const Size.square(100),
   });
 
