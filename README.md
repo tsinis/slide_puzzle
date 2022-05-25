@@ -30,7 +30,7 @@
 
 ## Description
 
-A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
+This project is **one of the winning submissions** in the Official **Google's** [Flutter Challenge](https://flutterhack.devpost.com/project-gallery), called "***Flutter Puzzle Hack***" (with hundreds valid entries from around the world and more than 5,5k participants). You can read more about this contest here: [flutter.dev/events/puzzle-hack](https://flutter.dev/events/puzzle-hack).
 
 *This is a heavily modified version of the sample project provided as a starting point of this challenge (Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.). Modified by [Roman Cinis][roman_cinis_link].*
 

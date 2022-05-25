@@ -7,30 +7,30 @@ maintainer: Roman Cinis
 publish_to: none
 
 environment:
-  sdk: ">=2.16.1"
-  flutter: ">=2.10.3"
+  sdk: ">=2.17.0"
+  flutter: ">=3.0.1"
 
 dependencies:
   bloc: ^8.0.3
-  confetti: ^0.6.0
+  confetti: ^0.7.0
   equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.0.3
-  font_awesome_flutter: ^10.0.0-beta
+  flutter_svg: ^1.1.0
+  font_awesome_flutter: ^10.1.0
   gap: ^2.0.0
-  google_fonts: ^2.3.1
+  google_fonts: ^3.0.1
   intl: ^0.17.0
-  just_audio: ^0.9.20
+  just_audio: ^0.9.21
   just_audio_libwinmedia:
     git:
       url: https://github.com/bdlukaa/just_audio_libwinmedia
       ref: e4882cec24cfdfe0931e7794ac7d46ad6b4d1804
   universal_platform: ^1.0.0+1
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.2
   url_strategy: ^0.2.0
   websafe_svg: ^2.1.1
   window_size:
@@ -41,10 +41,10 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.0.3
-  dart_code_metrics: ^4.12.0
-  fake_async: ^1.2.0
-  flutter_lints: ^1.0.4
-  flutter_native_splash: ^2.1.0
+  dart_code_metrics: ^4.15.2
+  fake_async: ^1.3.0
+  flutter_lints: ^2.0.1
+  flutter_native_splash: ^2.2.1
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0

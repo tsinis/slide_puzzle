@@ -19,7 +19,7 @@ class AudioControl extends StatelessWidget {
         // ignore: avoid_types_on_closure_parameters
         context.select((AudioControlBloc bloc) => bloc.state.muted);
     final audioIcon =
-        audioMuted ? FontAwesomeIcons.volumeMute : FontAwesomeIcons.volumeUp;
+        audioMuted ? FontAwesomeIcons.volumeXmark : FontAwesomeIcons.volumeHigh;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
